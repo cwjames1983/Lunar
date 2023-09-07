@@ -1,0 +1,415 @@
+\documentclass[a4article,12pt]{article}
+
+\usepackage{amsmath, amssymb}
+
+\newcommand{\kvec}[0]{{\mathbf k}}
+\newcommand{\rvec}[0]{{\mathbf r}}
+\newcommand{\kvecp}[0]{{\mathbf k}^{\prime}}
+\newcommand{\rvecp}[0]{{\mathbf r}^{\prime}}
+\newcommand{\Hvec}[0]{{\mathbf H}}
+\newcommand{\Evec}[0]{{\mathbf E}}
+\newcommand{\Fcal}[1]{{\mathcal F}_{#1}}
+\newcommand{\nvec}[0]{{\mathbf n}}
+
+\begin{document}
+
+\section{Description of the problem}
+
+We begin with a plane wave with vectors:
+%
+\begin{eqnarray}
+\mathbf{k} & = & k \left(\sin \alpha \cos \beta, \sin \alpha \sin \beta, \cos \alpha \right) \\
+\mathbf{E} & = & \mathbf{E}_{\perp}+\mathbf{E}_{\parallel} \\
+\mathbf{E}_{\perp} & = & E_{\perp} \left(- \sin \beta, \cos \beta, 0 \right) \\
+\mathbf{E}_{\parallel} & = & E_{\parallel} \left(\cos \alpha \cos \beta, \cos \alpha \sin \beta, -\sin \alpha  \right)
+\end{eqnarray}
+%
+Note we use the convention that $\hat{k} \times \hat{E}_{\perp} = \hat{E}_{\parallel}$. We also have the relations: 
+%
+\begin{eqnarray}
+\psi & = & \frac{e^{i k r}}{r} \\
+r & = & \sqrt{ (x-x^{\prime})^2+(y-y^{\prime})^2+(z-z^{\prime})^2} \\
+\end{eqnarray}
+%
+where the convention is that the points $\left(x^{\prime}, y^{\prime}, z^{\prime}=0 \right)$ lie on the diffracting apperture (facet) and the points $\left(x,y,z\right)$ lie at the point of observation. Since we are in the far-field, we can write:
+%
+\begin{eqnarray}
+k r & = & \kvec \cdot {\mathbf r} \\
+& = & \kvec \cdot {\mathbf R - r^{\prime}} \\
+& = & k R - k ( \hat{k}_x r_x^{\prime} + \hat{k}_y r_y^{\prime})
+\end{eqnarray}
+%
+and thus:
+%
+\begin{eqnarray}
+\mathbf{H}_{\perp} & = & \sqrt{\epsilon/\mu} E_{\perp} \left(\sin \beta, -\cos \beta, 0 \right) \\
+\mathbf{H}_{\parallel} & = & \sqrt{\epsilon/\mu} E_{\parallel} \left(\cos \alpha \cos \beta, \cos \alpha \sin \beta, -\sin \alpha  \right).
+\end{eqnarray}
+%
+Note $\hat{E}_{\parallel} = \hat{H}_{\parallel}$, while $\hat{E}_{\perp} = - \hat{H}_{\perp}$. Also, the surface normal $\hat{n}$ is given simply by:
+%
+\begin{eqnarray}
+\hat{n} & = & \left( 0,0,-1 \right).
+\end{eqnarray}
+%
+Also, we find for $\psi$:
+%
+\begin{eqnarray}
+\psi & = & \frac{e^{i k r}}{r} \\
+& \approx & \frac{e^{i k R}}{R} e^{-i \kvec \cdot {\mathbf r}^{\prime}} \\
+\bigtriangledown \psi & = & [1/r - i k] \frac{e^{i k r}}{r} \hat{r} \\
+& \approx & - i k \frac{e^{i k R}}{R} e^{-i k \rvecp} \hat{r} 
+\end{eqnarray}
+%
+where terms with $\approx$ are valid for any far-field solution.
+
+Finally, recall the following:
+%
+\begin{eqnarray}
+c^2_0 & = & \frac{1}{\epsilon_0 \mu_0} \\
+\epsilon & = & \epsilon_R \epsilon_0 \\
+k & = & 2 \pi \omega n/c
+\end{eqnarray}
+
+
+\section{Now we begin!}
+
+The Stratton-Chu result (Stratton \& Chu, 1939, Eq.\ 25) gives:
+%
+\begin{eqnarray}
+4 \pi E \left(x,y,z\right) & = & - \frac{1}{i \omega \epsilon} \oint_C \bigtriangledown \psi \mathbf{H}_1 \cdot d \mathbf{s} + \oint_C \psi \mathbf{E}_1 \times d \mathbf{s}  \nonumber \\
+& & - \int_{S_1} \left(\mathbf{E}_1 \frac{\delta \psi}{\delta n} - \psi \frac{\delta \mathbf{E}_1}{\delta n} \right) da
+\end{eqnarray}
+%
+or alternatively (Eq.\ 24):
+%
+\begin{eqnarray}
+4 \pi E \left(x,y,z\right) & = & - \frac{1}{i \omega \epsilon} \oint_C \bigtriangledown \psi \mathbf{H}_1 \cdot d \mathbf{s} -\iint_{S_1} \left[ i \omega \mu (\mathbf{n} \times \mathbf{H}_1) \psi \right. \nonumber \\
+& & + \left. (\mathbf{n} \times \mathbf{E}_1) \times \bigtriangledown \psi + (\mathbf{n} \cdot \mathbf{E_1}) \bigtriangledown \psi \right] da
+\end{eqnarray}
+%
+We use this second formulation, taking:
+%
+\begin{eqnarray}
+4 \pi E \left(x,y,z\right) & = & \mathcal{F}_1 + \mathcal{F}_2 + \mathcal{F}_3 + \mathcal{F}_4\\
+\mathcal{F}_1 & = & - \frac{1}{i \omega \epsilon} \oint_C \bigtriangledown \psi \mathbf{H}_1 \cdot d \mathbf{s} \\
+\mathcal{F}_2 & = & - \iint_{S_1} i \omega \mu (\mathbf{n} \times \mathbf{H}_1) \psi da \\ 
+\mathcal{F}_3 & = & - \iint_{S_1} (\mathbf{n} \times \mathbf{E}_1) \times \bigtriangledown \psi da \\
+\mathcal{F}_4 & = & - \iint_{S_1} (\mathbf{n} \cdot \mathbf{E_1}) \bigtriangledown \psi da
+\end{eqnarray}
+
+Let us for now treat each seperately. In general, each will be solved for the $E_{\perp}$ and $E_{\parallel}$ cases seperately.
+
+\subsection{${\mathcal F}_1$}
+
+\begin{eqnarray}
+\mathcal{F}_1 & = & - \frac{1}{i \omega \epsilon} \oint_C \bigtriangledown \psi \mathbf{H}_1 \cdot d \mathbf{s} \\
+& = & - \frac{1}{i \omega \epsilon} \left( - i k \frac{e^{i k R}}{R} \right) \hat{r} \oint_C e^{-i \kvec_t \cdot \mathbf{r}^{\prime}}  \mathbf{H}_1 \cdot d \mathbf{s}
+\end{eqnarray}
+%
+where the phase factors from the incident terms are still contained in $\mathbf{H}$.
+Looking at the part:
+%
+\begin{eqnarray}
+\oint_C e^{-i k \hat{k}_t \cdot \vec{r}^{\prime}}  \mathbf{H}_1 \cdot d \mathbf{s}  & = & \int_{-\frac{a}{2}}^{\frac{a}{2}}  \left. H_x dx^{\prime} \, \, e^{i ( \kvec_i - \kvec_t ) \cdot \mathbf{r}^{\prime})}  \right|_{y=-\frac{b}{2}} \nonumber \\
+&  & - \int_{-\frac{a}{2}}^{\frac{a}{2}} \left.  H_x dx^{\prime} \, \, e^{i (\kvec_i - \kvec_t) \cdot \mathbf{r}^{\prime})} \right|_{y=\frac{b}{2}}\nonumber  \\
+&  & + \int_{-\frac{b}{2}}^{\frac{b}{2}}  \left. H_y dy^{\prime} \, \, e^{i (\kvec_i - \kvec_t) \cdot \mathbf{r}^{\prime})} \right|_{x=\frac{a}{2}} \nonumber \\
+&  & - \int_{-\frac{b}{2}}^{\frac{b}{2}}  \left. H_y dy^{\prime} \, \, e^{i (\kvec_i - \kvec_t) \cdot \mathbf{r}^{\prime})} \right|_{x=-\frac{a}{2}}
+\end{eqnarray}
+%
+The first of these becomes:
+%
+\begin{eqnarray}
+\frac{H_x}{i (\kvec_i - \kvec_t)_x}  e^{-i (\kvec_i - \kvec_t)_y \frac{b}{2})} \left[ e^{i (\kvec_i - \kvec_t)_x \frac{a}{2}} - e^{ -i (\kvec_i - \kvec_t)_x \frac{a}{2}} \right] \\
+= \frac{2 H_x}{(\kvec_i - \kvec_t)_x}  \sin \left[ (\kvec_i - \kvec_t)_x \frac{a}{2} \right] e^{-i (\kvec_i - \kvec_t)_y \frac{b}{2}}  
+\end{eqnarray}
+%
+The second is identical, except with $-\frac{b}{2}$ replaced by $\frac{b}{2}$, and a -ve sign out front. Therefore the addition of the two is:
+%
+\begin{eqnarray}
+\frac{2 H_x}{(\kvec_i - \kvec_t)_x}  \sin \left[ (\kvec_i - \kvec_t)_x \frac{a}{2} \right] \left[ e^{-i (\kvec_i - \kvec_t)_y \frac{b}{2}} - e^{i (\kvec_i - \kvec_t)_y \frac{b}{2}} \right] \\
+= \frac{-4 i H_x}{(\kvec_i - \kvec_t)_x}  \sin \left[ (\kvec_i - \kvec_t)_x \frac{a}{2} \right] \sin \left[ (\kvec_i - \kvec_t)_y \frac{b}{2} \right]
+\end{eqnarray}
+%
+If we solve the same problem for the other two components, we analogously find their sum to be:
+%
+\begin{eqnarray}
+\frac{4 i H_y}{(\kvec_i - \kvec_t)_y}  \sin \left[ (\kvec_i - \kvec_t)_x \frac{a}{2} \right] \sin \left[ (\kvec_i - \kvec_t)_y \frac{b}{2} \right]
+\end{eqnarray}
+%
+Adding these and including all terms leads to:
+%
+\begin{eqnarray}
+{\mathcal F}_1 & = & \frac{i k}{\omega \epsilon} \left(\frac{e^{i k R}}{R} \right) \hat{r} \left\{ \frac{4 H_y}{(\kvec_i - \kvec_t)_y} - \frac{4 H_x}{(\kvec_i - \kvec_t)_x} \right\}  \\
+&& \times \left\{ \sin \left[ (\kvec_i - \kvec_t)_x \frac{a}{2} \right] \sin \left[ (\kvec_i - \kvec_t)_y \frac{b}{2} \right] \right\} \\
+& = & \frac{4 i k}{\omega \epsilon} \left(\frac{e^{i k R}}{R} \right) \hat{r} \left\{ H_y (\kvec_i - \kvec_t)_x - H_x (\kvec_i - \kvec_t)_y \right\}  \\
+&& \times \left\{ \frac{ \sin \left[ (\kvec_i - \kvec_t)_x \frac{a}{2} \right]}{(\kvec_i - \kvec_t)_x \frac{a}{2} } \frac{ \sin \left[ (\kvec_i - \kvec_t)_y \frac{b}{2} \right] }{\kvec_i - \kvec_t)_y \frac{b}{2} } \right\}
+\end{eqnarray}
+%
+Note that in the case where the field is continuous, the contribution along each edge will cancel from another facet edge next to it. Hence, this component will go to zero - which of course it should, since the electric field component here is not in the direction of propagation. However, calculating it could be useful should we want to estimate the size of such errors.
+
+\subsection{${\mathcal F}_2$}
+
+Note: the normal vector is actually $(0,0,-1)$ here - we should be careful, except that in this case all it will lead to is a common phase factor of $\pi$, which will affect the results precisely not at all.
+
+\begin{eqnarray}
+{\mathcal F}_2 & = & -\int_{S_1} i \omega \mu (\mathbf{n} \times \mathbf{H}_1) \psi \\
+& = & -i \omega \mu  \int_{-\frac{a}{2}}^{\frac{a}{2}} dx^{\prime} \, \int_{-\frac{b}{2}}^{\frac{b}{2}} dy^{\prime} \, (Hy, -Hx,0) e^{i {\textbf k}_i \cdot {\textbf r}^{\prime}} \frac{e^{i k r}}{r} \\
+& = & -i \omega \mu \frac{e^{i k R}}{R} (Hy, -Hx,0) \int_{-\frac{a}{2}}^{\frac{a}{2}} dx^{\prime} \, \int_{-\frac{b}{2}}^{\frac{b}{2}} dy^{\prime} \, e^{i (\kvec_i-\kvec_t) \cdot \rvecp}
+\end{eqnarray}
+%
+Now, we pause to consider this integral for the moment. We have phase factors for both the incoming and outgoing side, where since the wave is assumed to be travelling in the positive x,y,z direction, an increase in the integrating parameters $x^{\prime}$ and $y^{\prime}$ should increase the pre-transmission phase and decrease the post-transmission phase. Hence, the integral becomes:
+%
+\begin{eqnarray}
+e^{i (\kvec_i-\kvec_t) \cdot r^{\prime}} & = & e^{i \left[ (\hat{k}_i-\hat{k}_t)_x x^{\prime} + (\hat{k}_i-\hat{k}_t)_y y^{\prime} \right]} \\
+\int_{-\frac{a}{2}}^{\frac{a}{2}} dx^{\prime} \, \int_{-\frac{b}{2}}^{\frac{b}{2}} dy^{\prime} \, e^{i (\kvec_i-\kvec_t) \cdot r^{\prime}} & = & - 4 \frac{\sin \left(\frac{b}{2}( \kvec_i - \kvec_t )_y) \right)}{( \kvec_i - \kvec_t )_y} \frac{\sin \left(\frac{a}{2} (\kvec_i - \kvec_t )_x \right)}{( \kvec_i - \kvec_t )_x}
+\end{eqnarray}
+%
+where the negative sign comes from the square of imaginary $i$. Incorporating all the prior factors gives the final expression:
+%
+\begin{eqnarray}
+{\mathcal F}_2 & = & 4i \omega \mu \frac{e^{i k R}}{R} (Hy, -Hx,0)  \nonumber \\
+& &  \frac{\sin \left(\frac{a}{2} ( \kvec_i - \kvec_t )_x \right)}{( \kvec_i - \kvec_t )_x} \frac{\sin \left( \frac{b}{2}( \kvec_i - \kvec_t )_y \right)}{(\kvec_i - \kvec_t )_y}
+\end{eqnarray}
+%
+
+\subsection{${\mathcal F}_3$}
+
+\begin{eqnarray}
+{\mathcal F}_3 & = & - \int_{S_1} (\mathbf{n} \times \mathbf{E}_1) \times \bigtriangledown \psi \\
+& = & i k \frac{e^{i k R}}{R} \int_{-\frac{a}{2}}^{\frac{a}{2}} dx^{\prime} \, \int_{-\frac{b}{2}}^{\frac{b}{2}} dy^{\prime} \, e^{i (\kvec_i-\kvec_t)} (Ey, -Ex, 0) \times \hat{r}
+\end{eqnarray}
+%
+Observe that the vector $\hat{r} = \frac{1}{k} \kvec$ (farfield). Therefore the above expression becomes:
+%
+\begin{eqnarray}
+{\mathcal F}_3  & = &  - 4 i \frac{e^{i k R}}{R} (-k_z E_x, -k_z E_y, k_y E_y + k_x E_x) \nonumber \\
+&& \frac{\sin \left( \frac{a}{2} (\kvec_i - \kvec_t )_x \right)}{( \kvec_i - \kvec_t )_x} \frac{\sin \left( \frac{b}{2}( \kvec_i - \kvec_t )_y \right)}{( \kvec_i - \kvec_t )_y}  \\
+\end{eqnarray}
+
+\subsection{${\mathcal F}_4$}
+
+We note here that $\hat{r} = \hat{k}$, so that $k \hat{r} = \kvec$:
+%
+\begin{eqnarray}
+{\mathcal F}_4 & = &  - \int_{S_1} \mathbf{n} \cdot \mathbf{E_1} \bigtriangledown \psi da \\
+& = & 4 i E_z \frac{e^{i k R}}{R} \kvec \nonumber \\
+&& \frac{\sin \left( \frac{a}{2} (\kvec_i - \kvec_t )_x \right)}{( \kvec_i - \kvec_t )_x} \frac{\sin \left(\frac{b}{2}( \kvec_i - \kvec_t )_y \right)}{( \kvec_i - \kvec_t )_y}
+\end{eqnarray}
+%
+Note in the above there have been three -ve's included -- one from the sin-sin terms, once from n dot E, and one from the gradient.
+
+\section{Making Sense of it All}
+
+We first define some abbreviations:
+%
+\begin{eqnarray}
+\Phi_x  & = & \frac{\sin \left( \frac{a}{2} (\kvec_t - \kvec_i )_x \right)}{(\kvec_t - \kvec_i )_x} \\
+\Phi_y & = & \frac{\sin \left( \frac{b}{2}( \kvec_t - \kvec_i )_y \right)}{(\kvec_t - \kvec_i )_y}
+\end{eqnarray}
+%
+and in keeping with Stratton \& Chu let:
+%
+\begin{eqnarray}
+A & = & 4 \Phi_x \Phi_y \frac{e^{i k R}}{R}
+\end{eqnarray}
+%
+In general we have results in terms of each of $\kvec_i, \Hvec, \Evec$, when any one of these is entirely redundant to within a factor $\omega$. Similarly, we will derive results for the outgoing electric field $\Evec$ only, and of course the outgoing angles $\theta$ and $\phi$ which, along with $\omega$, define $k_B$.
+
+Thus we rid ourselves of $\Hvec$. In general, we are in a non-magnetised medium with $\mu=\mu_0$ (though in general $\epsilon \ne \epsilon_0$), so that our plane waves satisfy the relations:
+%
+\begin{eqnarray}
+{\mathbf B} & = & \mu_0 \Hvec \\
+\mathbf{H} & = & \sqrt{\epsilon/\mu_0} \hat{k} \times \mathbf{E} \\
+& = & \frac{1}{k c \mu_0} \kvec \times \mathbf{E} 
+\end{eqnarray}
+%
+In terms of the incident wave vector and fields then, we will substitute:
+%
+\begin{eqnarray}
+H_x & = & \frac{1}{k c \mu_0} \left( k_{i,y} E_z - k_{i,z} E_y \right) \\
+H_y & = & \frac{1}{k c \mu_0} \left( k_{i,z} E_x - k_{i,x} E_z \right) \\
+H_z & = & \frac{1}{k c \mu_0} \left( k_{i,x} E_y - k_{i,y} E_x \right)
+\end{eqnarray}
+%
+The incoming vector $\kvec_i$ can be defined in terms of two angles $\alpha$ and $\beta$ (analogous to $\theta$ and $\phi$) as follows:
+%
+\begin{eqnarray}
+\kvec^{\prime} & = & k \left( \sin \alpha \cos \beta, \sin \alpha \sin \beta, \cos \alpha \right) \\
+\kvec & = & k \left( \sin \theta \cos \phi, \sin \theta \sin \phi, \cos \theta \right) \\
+\end{eqnarray}
+%
+Using these relations, we can greatly simplify the equations for the various $\mathcal F$:
+%
+\begin{eqnarray}
+\Fcal{1} & = & \frac{i k}{\omega \epsilon} A \hat{r} \left( H_y (\kvec_i - \kvec_t)_x - H_x (\kvec_i - \kvec_t)_y \right) \\
+& = & \frac{i k}{\omega \epsilon} \frac{1}{k c \mu_0} A \hat{r} \left( ( k_z^{\prime} E_x - k_x^{\prime} E_z) (k_x^{\prime} - k_x^t) - (k_y^{\prime} E_z - k_z^{\prime} E_y) (k_y^{\prime} - k_y) \right) \\
+& = & \frac{i}{k^2} A \kvec \left( ( k_z^{\prime} E_x - k_x^{\prime} E_z) (k_x^{\prime} - k_x) - (k_y^{\prime} E_z - k_z^{\prime} E_y) (k_y^{\prime} - k_y) \right) \\
+\end{eqnarray}
+%
+We note that $\kvec^i$ and $\Evec$ are perpendicular, so that:
+%
+\begin{eqnarray}
+&& ( k_z^{\prime} E_x - k_x^{\prime} E_z) (k_x^{\prime} - k_x) - (k_y^{\prime} E_z - k_z^{\prime} E_y) (k_y^{\prime} - k_y) \\
+& = & k_z^{\prime} ( k_x^{\prime} E_xs + k_y^{\prime} E_y ) - ( k_x^{\prime 2} + k_y^{\prime 2}) E_z +f(k)\\
+& = & k_z^{\prime} (-k_z^{\prime} E_z) - ( k_x^{\prime 2} + k_y^{\prime 2}) E_z +f(k) \\
+& = & - k^{\prime 2} E_z  + k_y (k_y^{\prime} E_z - k_z^{\prime} E_y) - k_x ( k_z^{\prime} E_x - k_x^{\prime} E_z) 
+\end{eqnarray}
+%
+Thus we reduce $\Fcal{1}$ to:
+%
+\begin{eqnarray}
+\Fcal{1} & = & -i E_z A \kvec + \frac{i}{k^2} A \kvec \left( k_y (k_y^{\prime} E_z - k_z^{\prime} E_y) - k_x ( k_z^{\prime} E_x - k_x^{\prime} E_z) \right)
+\end{eqnarray}
+%
+The others are much simpler:
+%
+\begin{eqnarray}
+{\mathcal F}_2 & = & i \frac{\omega \mu}{k c \mu_0} (k_{i,z} E_x - k_{i,x} E_z, -k_y E_z + k_z E_y ,0) A \\
+& = & i k A (\cos \alpha E_x - \sin \alpha \cos \beta E_z, -\sin \alpha \sin \beta E_z + \cos \alpha E_y ,0) \\
+\end{eqnarray}
+
+\begin{eqnarray}
+{\mathcal F}_3 & = & - i k A \left( -\cos \theta E_x, -\cos \theta E_y, \sin \theta ( \sin \phi E_y + \cos \phi E_x) \right)
+\end{eqnarray}
+
+\begin{eqnarray}
+{\mathcal F}_4 & = & i A E_z  \kvec
+\end{eqnarray}
+
+We observe that $\Fcal{1}$ and $\Fcal{4}$ are parallel, and the terms cancel trivially, so that:
+%
+\begin{eqnarray}
+\Fcal{1}+\Fcal{4} & = & \Fcal{5} \\
+& = & \frac{i}{k^2} A \kvec \left( k_y (k_y^{\prime} E_z - k_z^{\prime} E_y) - k_x ( k_z^{\prime} E_x - k_x^{\prime} E_z) \right) \\
+& = & i k A \hat{r} \left( \sin \theta \sin \phi (\sin \alpha \sin \beta E_z - \cos \alpha E_y) \right. \nonumber \\
+&& \left.- \sin \theta \cos \phi ( \cos \alpha E_x - \sin \alpha \cos \beta E_z) \right) \nonumber \\
+&& \cdot \left( \sin \theta \cos \phi, \sin \theta \sin \phi, \cos \theta \right)
+\end{eqnarray}
+%
+
+\subsection{The General Solution}
+
+We now have three components:
+%
+\begin{eqnarray}
+\Fcal{2} & = & i k A (\cos \alpha E_x - \sin \alpha \cos \beta E_z, -\sin \alpha \sin \beta E_z + \cos \alpha E_y ,0) \\
+\Fcal{3} & = & i k A \left( \cos \theta E_x, \cos \theta E_y, -\sin \theta ( \sin \phi E_y + \cos \phi E_x) \right) \\
+\Fcal{5} & = & i k A \left( \sin \theta \sin \phi (\sin \alpha \sin \beta E_z - \cos \alpha E_y) \right. \nonumber  \\
+&& \left. - \sin \theta \cos \phi ( \cos \alpha E_x - \sin \alpha \cos \beta E_z) \right) \nonumber \\
+&& \cdot \left( \sin \theta \cos \phi, \sin \theta \sin \phi, \cos \theta \right) \hat{r}
+\end{eqnarray}
+
+
+The easiest way to make sense of this is to split these equations into a suitable set of basis vectors. In keeping with Stratton \& Chu, and also because we see that the most detaled term -- $\Fcal{5}$ -- is in the $\hat{r}$ direction only, we use as a basis:
+%
+\begin{eqnarray}
+\hat{r} & = & \left( \sin \theta \cos \phi, \sin \theta \sin \phi, \cos \theta \right) \\
+\hat{\theta} & = &  \left( \cos \theta \cos \phi, \cos \theta \sin \phi, - \sin \theta \right) \\
+\hat{\phi} & = & \left( -\sin \phi, \cos \phi, 0 \right) 
+\end{eqnarray}
+%
+for the primary reason that in this basis we have (not unexpectedly):
+%
+\begin{eqnarray}
+\frac{\Fcal{\hat{r}}}{i k A} & = & \left( \sin \theta \sin \phi (\sin \alpha \sin \beta E_z - \cos \alpha E_y) \right. \nonumber  \\
+&& \left. - \sin \theta \cos \phi ( \cos \alpha E_x - \sin \alpha \cos \beta E_z) \right) \nonumber \\
+&& \sin \theta \cos \phi \left( \cos \alpha E_x - \sin \alpha \cos \beta E_z+\cos \theta E_x \right) \nonumber \\
+&& \sin \theta \sin \phi \left( -\sin \alpha \sin \beta E_z + \cos \alpha E_y +\cos \theta E_y \right)\nonumber \\
+&& - \cos \theta \left( \sin \theta ( \sin \phi E_y + \cos \phi E_x) \right) \nonumber \\
+& = & 0
+\end{eqnarray}
+%
+This states that in fact the radiation {\it is} radiation. The other components become:
+%
+\begin{eqnarray}
+\frac{\Fcal{\hat{\theta}}}{i k A} & = & \cos \theta \cos \phi \left(\cos \alpha E_x - \sin \alpha \cos \beta E_z + \cos \theta E_x \right) \nonumber \\
+&& + \cos \theta \sin \phi \left( -\sin \alpha \sin \beta E_z + \cos \alpha E_y + \cos \theta E_y \right) \nonumber \\
+&& - \sin \theta \left(  -\sin \theta ( \sin \phi E_y + \cos \phi E_x) \right) \nonumber \\
+%& = & \left( \cos \theta \cos \phi (\cos \alpha + \cos \theta) +\sin^2 \theta \cos \phi \right) E_x \nonumber \\
+%&& + \left( \cos \theta \sin \phi (\cos \alpha + \cos \theta) + \sin^2 \theta \sin \phi \right) E_y \nonumber \\
+%&& - \left( \cos \theta \cos \phi  \sin \alpha \cos \beta + \cos \theta \sin \phi \sin \alpha \sin \beta  \right) E_z \nonumber \\
+& = & \cos \phi \left( 1 + \cos \theta \cos \alpha \right) E_x \nonumber \\
+&& + \sin \phi \left( 1 + \cos \theta \cos \alpha \right)  E_y \nonumber \\
+&& - \cos \theta \sin \alpha \left(  \cos \phi \cos \beta + \sin \phi \sin \beta \right) E_z
+\end{eqnarray}
+%
+\begin{eqnarray}
+\frac{\Fcal{\hat{\phi}}}{i k A} & = & -\sin \phi \left(\cos \alpha E_x - \sin \alpha \cos \beta E_z + \cos \theta E_x \right) \nonumber \\
+&& + \cos \phi \left(  -\sin \alpha \sin \beta E_z + \cos \alpha E_y + \cos \theta E_y \right) \nonumber \\
+& = & - \sin \phi  \left(\cos \alpha + \cos \theta \right) E_x \nonumber \\
+&& + \cos \phi  \left(\cos \alpha + \cos \theta \right) E_y \nonumber \\
+&& \sin \alpha \left( \sin \phi \cos \beta - \cos \phi \sin \beta \right) E_z
+\end{eqnarray}
+
+\subsection{For pokey and slappy cases}
+
+We can further divide the solutions into those for the pokey and slappy cases. This makes sense if the aperure is also a dielectric boundary, in which case the parallel $\parallel$ and perpendicular $\perp$ components must have already been calculated for purposes of transmission. The pokey case has the electric field polarisation aligned in the plane defined by the vector $\kvec_i$ and the surface normal $\nvec$:
+%
+\begin{eqnarray}
+\Evec_{\parallel} & = & E_{\parallel} \left( \cos \alpha \cos \beta, \cos \alpha \sin \beta, - \sin \alpha \right) \\
+\Evec_{\perp} & = & E_{\perp} \left( -\sin \beta, \cos \beta, 0 \right) 
+\end{eqnarray}
+%
+Hence:
+%
+\begin{eqnarray}
+\frac{\Fcal{\hat{\theta} \perp}}{i k A} & = & -\sin \beta \cos \phi \left( 1 + \cos \theta \cos \alpha \right) \nonumber \\
+&& \sin \phi \left( 1 + \cos \theta \cos \alpha \right) \cos \beta \nonumber \\
+& = & \left( 1 + \cos \theta \cos \alpha \right) \left(\sin \phi \cos \beta - \cos \phi \sin \beta \right)
+\end{eqnarray}
+
+%
+\begin{eqnarray}
+\frac{\Fcal{\hat{\phi} \perp}}{i k A} & = & \sin \phi  \left(\cos \alpha + \cos \theta \right) \sin \beta \nonumber \\
+&& + \cos \phi  \left(\cos \alpha + \cos \theta \right) \cos \beta \nonumber \\
+& = & \left(\cos \alpha + \cos \theta \right)  \left( \sin \phi \sin \beta + \cos \phi \cos \beta \right)
+\end{eqnarray}
+%
+\begin{eqnarray}
+\frac{\Fcal{\hat{\theta} \parallel}}{i k A} & = & \cos \phi \left( 1 + \cos \theta \cos \alpha \right) \cos \alpha \cos \beta \nonumber \\
+&& \sin \phi \left( 1 + \cos \theta \cos \alpha \right) \cos \alpha \sin \beta \nonumber \\
+&& \sin \alpha \cos \theta \sin \alpha \left(  \cos \phi \cos \beta + \sin \phi \sin \beta \right) \nonumber \\
+& = & \left( \cos \theta + \cos \alpha \right) \left( \cos \phi \cos \beta + \sin \phi \sin \beta  \right) 
+\end{eqnarray}
+%
+\begin{eqnarray}
+\frac{\Fcal{\hat{\phi} \parallel}}{i k A} & = & - \sin \phi  \left(\cos \alpha + \cos \theta \right) \cos \alpha \cos \beta \nonumber \\
+&& + \cos \phi  \left(\cos \alpha + \cos \theta \right) \cos \alpha \sin \beta \nonumber \\
+&& - \sin \alpha \left( \sin \phi \cos \beta - \cos \phi \sin \beta \right) \sin \alpha \nonumber \\
+& = & \left( 1+ \cos \theta \cos \alpha \right) \left( \sin \beta \cos \phi - \sin \phi \cos \beta \right)
+\end{eqnarray}
+
+\subsection{Comparison to results of Stratton and Chu}
+
+Stratton and Chu take the case of $\beta_{SC} = \pi/2$ and quote the resulting fields. Their results were:
+%
+\begin{eqnarray}
+\Fcal{\hat{\theta} \perp} & = & (-) \cos \phi \left( 1 + \cos \theta \cos \alpha \right) \\
+\Fcal{\hat{\phi} \perp} & = & (-) - \sin \phi  \left(\cos \alpha + \cos \theta \right) \\
+\Fcal{\hat{\theta} \parallel} & = & (-) -\sin \phi \left( \cos \theta + \cos \alpha \right) \\
+\Fcal{\hat{\phi} \parallel} & = & (-)-\cos \phi \left( 1+ \cos \theta \cos \alpha \right) 
+\end{eqnarray}
+%
+Which is exactly the $-$ve of what we get. The reason for this is that we have chosen the $\parallel$ direction to be $-$ve that of their choice, which produces a constant $-$ve sign throughout. Other than this, the equations agree. I thus conclude the results to be correct.
+
+\section{Summary}
+
+We now have the following set of solutions:
+%
+\begin{eqnarray}
+\Evec_{\hat{\theta} \perp} & = & \frac{i k A}{4 \pi} \left( 1 + \cos \theta \cos \alpha \right) \left(\sin \phi \cos \beta - \cos \phi \sin \beta \right) E_{\perp}\\
+\Evec_{\hat{\phi} \perp} & = & \frac{i k A}{4 \pi} \left(\cos \alpha + \cos \theta \right)  \left( \sin \phi \sin \beta + \cos \phi \cos \beta \right) E_{\perp} \\
+\Evec_{\hat{\theta} \parallel} & = & \frac{i k A}{4 \pi} \left( \cos \alpha + \cos \theta \right) \left(\sin \phi \sin \beta + \cos \phi \cos \beta  \right) E_{\parallel} \\
+\Evec_{\hat{\phi} \parallel} & = & \frac{i k A}{4 \pi} \left( 1+ \cos \theta \cos \alpha \right) \left( \sin \beta \cos \phi - \sin \phi \cos \beta \right) E_{\parallel}
+\end{eqnarray}
+%
+and the usual:
+%
+\begin{eqnarray}
+A & = & 4 \frac{e^{i k R}}{R} \frac{\sin \left( \frac{a}{2} (\kvec_t - \kvec_i )_x \right)}{(\kvec_t - \kvec_i )_x} \frac{\sin \left( \frac{b}{2}( \kvec_t - \kvec_i )_y \right)}{(\kvec_t - \kvec_i )_y}
+\end{eqnarray}
+
+\end{document}
+
+

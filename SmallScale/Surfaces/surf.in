@@ -1,0 +1,127 @@
+1024 1024 0.78
+1 5. 0.01 0.29
+2 v2_text_surf_1024_5m_true.dat
+0 check_8196_0p1m_true.dat
+0 1024 2 0 slopes_8196_0p1m_true.dat
+0 76 8196 1000 slice_8196_1cm_true.dat
+
+
+8192 8192 0.78
+1 0.01 0.01 0.29
+surf_8192_1cm_true.dat
+0 check_8196_0p1m_true.dat
+0 1024 2 0 slopes_8196_0p1m_true.dat
+1 76 8196 1000 slice_8196_1cm_true.dat
+
+
+
+1024 1024 0.78
+1 0.1 0.01 0.29
+text_surface_1024_10cm_true.dat
+1 check_1024_10cm_true.dat
+0 1024 2 2 slopes_1024_10cm_true.dat
+
+
+8196 8196 0.78
+1 0.01 0.01 0.29
+surf_8196_0p01m_true.dat
+1 check_8196_0p01m_true.dat
+0 1024 2 2 slopes_8196_0p01m_true.dat
+1 76 8196 1000 slice_8196_0p01m_true.dat
+
+
+
+8096 8096 0.78
+1 0.1 0.01 0.29
+rs_8096_0p1_v2.dat
+1 check_8096_0p1_v2.dat
+0 8096 2 2 slopes_rs_8096_0p1_v2.dat
+
+
+
+8096 8096 0.78
+1 0.01 0.1 0.1053
+temp_8096_0p01.dat
+1 check_8096_0p01.dat
+0 8096 2 2 slopes_1024_0p1m_true.dat
+
+32768 32768 0.78
+1 5 0.01 0.29
+surf_32768_5m_true.dat
+1 check_32768_5m_true.dat
+0 1024 2 2 slopes_32768_5m_true.dat
+1 197 32000 2000 slice_32768_5m_true.dat
+
+
+
+
+1024 51024 0.6
+1 0.1 0.1053
+surface_512_1m_0p6.dat
+0 check_512_1m_0p6.dat
+1 512 2 0 slopes_512_1m_0p6.dat
+
+1024 1024 0.78
+1 100 1 0.1053
+surface_100m.dat
+1 check_100m.dat
+1 1024 1 4 slopes_100m.dat
+
+512 512 0.6
+1 1 0.1053
+surface_512_1m_0p6.dat
+0 check_512_1m_0p6.dat
+1 512 2 0 slopes_512_1m_0p6.dat
+
+
+
+
+512 512 0.78
+1 1 0.1053
+surface_512_1m_true.dat
+1 check_512_1m_true.dat
+0 spectrum_512_1m_true.dat
+1 512 2 2 slopes_512_1m_true.dat
+
+
+
+
+The format for the inputs is:
+
+n m H
+yn d tan(Srms)
+surf_file
+check_yn check_file
+spec_yn spec_file
+s1 s2 ds smethod slopes_file
+
+
+n: 		number of points in the x-dimension required for artificial surface
+m: 		number of points in the y-direction
+H: 		The Hurst parameter of the surface.
+yn:		either (1) normalise the slope according to the following; (0) don't bother!
+d: 		the interval size over the surface (m) [needed regardless of the value of yn]
+Srms:		The rms slope tangent over the interval size [needed regardless of the value of yn]
+surf_file	File name to output the surface data to.
+check_yn	either [0]: don't do a power spec check, or [1]: do said check.
+check_file	Output file for 1D power spectrum data.
+spec_yn		either [0]: don't write 2D power spectrum, or [1]: do write spectrum.
+spec_file	O/P file for writing the raw 2D spectrum
+s1		horizontal scale of first slope calculation [units of d]
+s2		horiz. scale of last slope calculation [in integer units of d]
+ds		increment for slope calculation loop
+smethod		either (1): loop as s1, s1+ds...s2, or (2): s1, s1*ds, ds*ds^2..s2. Putting down smethod=3 chooses s1=1, s2=min(n1,n2), arithmetic loop, and ds ~sqrt(s2). Any other value will skip the slope step.
+slopes_file	output file for surface slopes.
+
+
+NOTES:
+	1.	All of these inputs must be present, even if they're rendered redundant by turning various things on or off.
+
+	2.	The horizontal scale is only used for working out the divisor for the slope tangent, since slope = (height1-height2)/(horizontal distance). But it also gets written with the data.
+	
+	3. Below are the input lines I used for the large false lunar surface from which I generated my graphs:
+	
+
+
+
+
