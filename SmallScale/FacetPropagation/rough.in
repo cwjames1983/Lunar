@@ -1,23 +1,18 @@
-3 0.1 1e-8 1 1 1e-6 0 0 1000 
-1 Surfaces/trivial_1024.dat
+3 0.0001 1e-8 20 1 1e-6 0 1 40 1000 
+1 trivial.dat
 1 0 0 0 
-0 modded_trivial.dat
-TrackFiles/trivial_tracks.dat
-0   0    0.0    0.0    50.0
+1 modded_trivial.dat
+trivial_tracks.dat
+0   0    0.0    0.0    10.0
 1.8 1.8 18e10
 0 0 5  
-90 1 90
+901 1 90
 2 1e8 1e9 1
-CIRA/statistics.log
-0 arena_10m_1G_f // columns const theta, rows const phi, tables const freq
-1 CIRA/flat_test // columns const freq, rows const theta, tables const phi
-0 arena_100m_t_v2 // theta file
-0 arena_100m_fft_v2 // time file
-
-
-
-
-
+outputs/statistics.log
+0 outputs/frequencies/ // columns are const theta, rows are const phi, tables const frequency
+0 outputs/phis/ // columns are const freq, rows are const theta, tables const phi
+0 outputs/thetas/ // theta file
+0 output/time/ // time file
 
 Line 1:
 	USE_WHICH (3 method for interpolating a facet from three points: always = 3)
@@ -27,10 +22,12 @@ Line 1:
 	FMODE (=1 to loop facets as inner loop, =2 to loop as outer loop. Use 1 unless a very large surface)
 	SIN_APPROX_2 (=1e-6] (value for approx sin x = x in generating specular vectors)
 	TDIV_METHOD [=0] (method for dividing tracks. If > 0 then force TDIVS = this value.)
+	TDIV_CONST [=0] for the tracks to be 'intelligently' split up to TDIV_METHOD times. [=1] to force the number of track divisions to TDIV_METHOD
 	FDIVMETHOD [=1] (method for dividing facets. If > 0 force FDIV=this value)
+	FDIV_FACTOR (factor between highest and lowest frequencies where track facet splitting is identical)
 
 Line 2:
-	Input File Type (=2) [type of input file - binary=2 or text=1)
+	Input File Type (=2) [type of input file - binary=2 or text=1] (input file for surfaces)
 	Input surface file name [name of surface file!]
 	
 Line 3:
@@ -49,7 +46,7 @@ Line 5:
 Line 6:
 	THETA (=0) [angle to rotate tracks in x-y plane - 0 in x-direction only]
 	PHI (=0) [angle to rotate tracks towards z from x-y plane: 0 = in x-y plane]
-	DX (=0) [distance (m) in x-direction from the centre of the surface to place tracks]
+	DX (=0) [distance (m) in x-direction from the centre of the surface to place track starting position]
 	DY (=0) [as above for y-direction]
 	DEPTH (=10) [depth, m, below local surface to place tracks]
 	

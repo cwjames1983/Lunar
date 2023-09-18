@@ -38,6 +38,7 @@ void split_facet(track &subtrack, facet &subfacet, int if0, int nfs, int ifx, in
 	
 	NSPLITCALLS++;
 	
+
 	subfacets = new facet[NTIRDIV2];
 	for (i=0; i<NTIRDIV; i++)
 		{
@@ -130,8 +131,16 @@ void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, in
 	dntrackdiv=(long double) ntrackdiv;
 	
 	// logs greatest number of divisions
-	if (ntrackdiv > MAX_TDIV) {MAX_TDIV=ntrackdiv;}
+	if ( TDIV_CONST )
+		{
+		
+		ntrackdiv = MAX_TDIV;
+		if( ntrackdiv == 0) {ntrackdiv = 1;}
+
+		}
+	else if ( ntrackdiv > MAX_TDIV ) { MAX_TDIV=ntrackdiv; }
 	if (nfacetdiv > MAX_FDIV) {MAX_FDIV=nfacetdiv;}
+	
 	
 	// ensures we don't re-create memory unless we have to
 	// i.e. only increases number of subfacets if this is larger than previous

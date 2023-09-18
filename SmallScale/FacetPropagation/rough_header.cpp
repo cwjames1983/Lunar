@@ -60,7 +60,7 @@ long double XBASIS[3]={1,0,0}, YBASIS[3]={0,1,0}, ZBASIS[3]={0,0,1};
 int USE_WHICH=2;
 long double SIN_APPROX=1.e-7, SIN_APPROX_2=1e-7;
 int FDIV_METH=0, TDIV_METH=0;
-
+bool TDIV_CONST=false;
 //############## Constants #############
 
 const float MAX_SYS_MB=1024.; // max MB allowed in system memory (approx)

@@ -1,5 +1,5 @@
 /****** 
-Program to calculate the Cherenkov radiation from a cascade under a rough surface
+Program to calculate the Askaryan radiation from a cascade under a rough surface
 
 The cascade is represented by a number of discrete particle tracks.
 The surface is represented by a regular grid of height functions.
@@ -63,7 +63,7 @@ int main()
 	int sqrtn, reportn;
 // ######## program starts ##########	
 	
-	cin>>USE_WHICH>>ERROR_MARGIN>>SIN_APPROX>>MAX_SPLITS>>FMODE>>SIN_APPROX_2>>TDIV_METH>>FDIV_METH>>FDIV_FACTOR; cin.getline(tempstring,mfl);
+	cin>>USE_WHICH>>ERROR_MARGIN>>SIN_APPROX>>MAX_SPLITS>>FMODE>>SIN_APPROX_2>>TDIV_METH>>TDIV_CONST>>FDIV_METH>>FDIV_FACTOR; cin.getline(tempstring,mfl);
 	
 	cout<<USE_WHICH<<" "<<ERROR_MARGIN<<" "<<SIN_APPROX<<" "<<MAX_SPLITS<<" "<<FMODE<<" "<<SIN_APPROX_2<<" "<<TDIV_METH<<" "<<FDIV_METH<<" "<<FDIV_FACTOR<<"\n";
 	
