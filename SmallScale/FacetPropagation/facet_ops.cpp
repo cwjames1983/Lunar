@@ -318,3 +318,4 @@ void get_facet_normal(facet &afacet)
 	cross(afacet.xvec, afacet.yvec, afacet.norm);
 	normalise(afacet.norm);
 	}
+

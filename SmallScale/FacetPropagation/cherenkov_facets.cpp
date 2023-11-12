@@ -24,7 +24,7 @@ void loop_facets(track &atrack, int if0, int nfs, float *surface)
 		for (ix=0; ix<NFX; ix++)
 			{
 			count++;
-			if (count%sqrf == 0) {cout<<"       Up to facet "<<ix<<" "<<iy<<" (centre [x,y] = ["<<FACETS[ix][iy].centre[0]<<" , "<<FACETS[ix][iy].centre[1]<<"]"<<endl;}
+			if (count%sqrf == 0) {cout<<"       Up to facet "<<ix<<" "<<iy<<" (centre [x,y] = ["<<FACETS[ix][iy].centre[0]<<" , "<<FACETS[ix][iy].centre[1]<<"])"<<endl;}
 			div_facet_track(atrack, FACETS[ix][iy], if0, nfs, ix, iy, surface);
 			}
 		}
@@ -38,6 +38,7 @@ void split_facet(track &subtrack, facet &subfacet, int if0, int nfs, int ifx, in
 	
 	NSPLITCALLS++;
 	
+
 	subfacets = new facet[NTIRDIV2];
 	for (i=0; i<NTIRDIV; i++)
 		{
@@ -130,8 +131,16 @@ void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, in
 	dntrackdiv=(long double) ntrackdiv;
 	
 	// logs greatest number of divisions
-	if (ntrackdiv > MAX_TDIV) {MAX_TDIV=ntrackdiv;}
+	if ( TDIV_CONST )
+		{
+		
+		ntrackdiv = MAX_TDIV;
+		if( ntrackdiv == 0) {ntrackdiv = 1;}
+
+		}
+	else if ( ntrackdiv > MAX_TDIV ) { MAX_TDIV=ntrackdiv; }
 	if (nfacetdiv > MAX_FDIV) {MAX_FDIV=nfacetdiv;}
+	
 	
 	// ensures we don't re-create memory unless we have to
 	// i.e. only increases number of subfacets if this is larger than previous
@@ -263,6 +272,15 @@ A:	It is implicit.
 
 */
 
+
+
+
+
+
+
+
+//#######################################################################################################################################################################################
+//												CHERENKOV FUNCTION
 
 
 void cherenkov(int if0, int nfs, facet &subfacet, track &subtrack, int ifx, int ify, float *surface, int nsplits)
@@ -767,3 +785,4 @@ bool in_zone(track atrack, facet afacet, long double fmax)
 	return OK;
 	}
 */
+

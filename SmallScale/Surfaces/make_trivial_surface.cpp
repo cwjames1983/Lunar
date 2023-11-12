@@ -10,9 +10,13 @@ The grid size and spacing are hard-coded.
 The Hurst exponent, H, is meaningles, since Srms is zero.
 */
 
-int main()
-	{
-	int nx=1024, ny=1024;
+int main(void) {
+	int nx, ny;
+    std::cout<<"Enter your side dimension: ";
+
+    std::cin>>nx;
+    ny=nx;
+
 	long double ds=0.2, Srms=0., H=0.78;
 	char *opfile="trivial.dat";
 	ofstream out(opfile);
@@ -28,4 +32,6 @@ int main()
 		out<<"\n";
 		}
 	out.close();
-	}
+
+    return 0;
+}

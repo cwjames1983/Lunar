@@ -1,5 +1,5 @@
-/****** 
-Program to calculate the Cherenkov radiation from a cascade under a rough surface
+/***** 
+Program to calculate the Askaryan radiation from a cascade under a rough surface
 
 The cascade is represented by a number of discrete particle tracks.
 The surface is represented by a regular grid of height functions.
@@ -26,7 +26,7 @@ However, check this! We can use this for the surface, or change the inputs
 int FMODE=1;
 int NIX, NIY;
 
-#include "rough_header.cpp"
+#include "rough_header.h"
 
 int main()
 	{
@@ -63,7 +63,7 @@ int main()
 	int sqrtn, reportn;
 // ######## program starts ##########	
 	
-	cin>>USE_WHICH>>ERROR_MARGIN>>SIN_APPROX>>MAX_SPLITS>>FMODE>>SIN_APPROX_2>>TDIV_METH>>FDIV_METH>>FDIV_FACTOR; cin.getline(tempstring,mfl);
+	cin>>USE_WHICH>>ERROR_MARGIN>>SIN_APPROX>>MAX_SPLITS>>FMODE>>SIN_APPROX_2>>TDIV_METH>>TDIV_CONST>>FDIV_METH>>FDIV_FACTOR; cin.getline(tempstring,mfl);
 	
 	cout<<USE_WHICH<<" "<<ERROR_MARGIN<<" "<<SIN_APPROX<<" "<<MAX_SPLITS<<" "<<FMODE<<" "<<SIN_APPROX_2<<" "<<TDIV_METH<<" "<<FDIV_METH<<" "<<FDIV_FACTOR<<"\n";
 	
@@ -295,17 +295,38 @@ At this point we have some tracks, and a surface. Now we want to specify at what
 	
 // ########## Program has finished - write info ###########
 
-	write_stats(stats_file);
+	write_stats(stats_file, rnx, rny);
 	write_all_outputs(freqyn, freq_file, thetayn, theta_file, phiyn, phi_file, timeyn, time_file);
 	}
 
-void write_stats(char *file)
+
+
+
+
+
+
+
+
+
+// GAP
+
+
+
+
+
+
+
+
+
+
+void write_stats(char *file, int rnx, int rny)
 	{
 	ofstream out;
 	int i,j,k;
 	cout<<"writing stats to file "<<file<<endl;
 	out.open(file);
-	
+
+	//out<<"WHY ISN'T THIS WORKING???\n"	
 	out<<"\n# statistics!\n";
 	out<<"\n#The "<<NPHIS<<" phis are: ";
 	for (i=0; i<NPHIS; i++)
@@ -326,15 +347,48 @@ void write_stats(char *file)
 		out<<FREQS[i]/1e9<<" ";
 		}
 	out<<"\n";
-	
-	
+
+	//Calculating total time
+	float time_total = TIMES[0] + TIMES[4] + TIMES[2] + TIMES[3];	
+	float total_time_seconds = TIMES[0] + TIMES[2] + TIMES[3] + TIMES[4];
+	float total_time_minutes = total_time_seconds / 60;
+	float total_time_hours = total_time_minutes / 60;	
 	out<<"#times:\n";
 //	TIMES[4]=time(0)-TIMES[4];
+	out<<"The size of this surface was "<<rnx<<"x"<<rny<<"m\n";
 	out<<"The maximum number of track subdivisions was: "<<MAX_TDIV<<", and the max number of facet divisions was "<<MAX_FDIV<<"^2\n\n";
 	out<<"Surface initialisation took "<<TIMES[0]<<" seconds.\n";
 	out<<"Track initialisation took "<<TIMES[2]<<" seconds.\n";
 	out<<"Other initialisation took "<<TIMES[3]<<" seconds.\n";
 	out<<"Cherenkov calculations took "<<TIMES[4]<<" seconds.\n";
+	out<<"\n";
+
+	//Eloquent way to output calculation time. I'm pretty sure there's a more
+	//efficient way to do this, but it's above my pay grade.
+	if(total_time_hours < 1) {
+		if(fmod(total_time_minutes,60)) {
+			float min_remainder = total_time_minutes-floor(total_time_minutes);
+			float sec_int = min_remainder * 60;	
+			out<<"Total simulation took "<<floor(total_time_minutes)<<" minutes and "<<sec_int<<" seconds.\n";
+		}
+		else {
+			out<<"Total simulation took "<<total_time_minutes<<" minutes.\n";
+		}
+	}
+	else {
+		if(fmod(total_time_hours,60)) {
+			float hour_remainder = total_time_hours-floor(total_time_hours);
+			float min_remainder = hour_remainder * 60;
+			float min_int = floor(min_remainder);
+			float min_remainder2 = min_remainder-floor(min_remainder);
+			float sec_int = min_remainder2 * 60;	
+			out<<"Total simulation took "<<floor(total_time_hours)<<" hours, "<<min_int<<" minutes and "<<sec_int<<" seconds. Damn.\n";
+		}
+		else {
+			out<<"Total simulation took "<<total_time_hours<<" hours. Sheesh.\n";
+		}
+	}
+	out<<"\n";
 	
 	out<<"Maximum 'curvature' MAX_CURVE = "<<MAX_CURVE<<"\n";
 	out<<"Max num track divs = "<<MAX_TDIV<<"\n";
@@ -347,14 +401,14 @@ void write_stats(char *file)
 		{
 		for (j=0; j<NPHIS; j++)
 			{
-			out<<THETAS[i]<<" "<<PHIS[j];
+			out<<THETAS[i]<<"  "<<PHIS[j];
 			for (k=0; k<3; k++)
 				{
-				out<<" "<<VIS_STATS[i][j][k];
+				out<<"      "<<VIS_STATS[i][j][k];
 				}
 			out<<"\n";
 			}
-		out<<"\n";
+		//out<<"\n"; ///APRAENTLY THIS DOESN'T DO ANYTHING?
 		}
 	out.close();
 	cout<<"done"<<endl;
@@ -523,6 +577,7 @@ void write_thetas(char *file, long double ****stokes, int which)
 		}
 	out.close();
 	}
+
 void write_thetas(char *file, long double ***EZ, long double ***EXY)
 	{
 	ofstream out;

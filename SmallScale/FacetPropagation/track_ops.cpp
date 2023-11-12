@@ -196,3 +196,4 @@ void init_track(track &atrack)
 	TRACKS_C[2] += atrack.centre[2]*atrack.q*atrack.length;
 	TRACKS_SUM += atrack.q*atrack.length;
 	}
+
