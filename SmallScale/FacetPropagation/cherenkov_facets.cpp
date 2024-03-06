@@ -85,7 +85,7 @@ void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, in
 	long double fxs[3], fys[3], fzs[5], txs[3], tys[3], tzs[3], tts[3];
 	facet *subfacets=0;
 	track subtrack, *usetrack;
-	long double dist, ddist, dlambda, dr;
+	long double dist, ddist, dlambda, dr; //CMW 04-03-24 okay, maybe ddist is delta d.
 	long double mindot=1e10, ddot;
 	
 	maxf=FREQS[if0+nfs-1];
@@ -101,9 +101,9 @@ void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, in
 		dist=pow(dot(vtemp, vtemp),0.5l);
 		ddot=fabs(dot(v0,vtemp))/dist;
 		if (ddot < mindot) {mindot=ddot;}
-		if (fabs(dist - base_distance) > ddist) {ddist = fabs(dist-base_distance);}
+		if (fabs(dist - base_distance) > ddist) {ddist = fabs(dist-base_distance);} //CMW 04-03-24 yeah this looks like delta d. This line just makes ddist an absolute value.
 		}
-	dr=ddist/base_distance;
+	dr=ddist/base_distance; // clearly delta r
 	wave_curvature=(1.-mindot)*base_distance/eff_wavelength;
 	ntrackdiv = (int) (max(dr/TRACK_DIST_ERROR, wave_curvature/TRACK_LAMBDA_ERROR))+1;
 	
@@ -136,9 +136,13 @@ void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, in
 		
 		ntrackdiv = MAX_TDIV;
 		if( ntrackdiv == 0) {ntrackdiv = 1;}
-
+			// line added to print the value of ntrackdiv 12/11/2023:
+			//std::cout<<"ntrackdiv is now "<<ntrackdiv<<std::endl;
 		}
-	else if ( ntrackdiv > MAX_TDIV ) { MAX_TDIV=ntrackdiv; }
+	else if ( ntrackdiv > MAX_TDIV ) { 
+		MAX_TDIV=ntrackdiv; 
+			//std::cout<<"ntrackdiv was  > MAX_TDIV and ntrackdiv is now "<<ntrackdiv<<std::endl;
+		}
 	if (nfacetdiv > MAX_FDIV) {MAX_FDIV=nfacetdiv;}
 	
 	
@@ -177,6 +181,7 @@ void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, in
 			{
 			gensubtrack(atrack, dntrackdiv, i, subtrack);
 			usetrack = &subtrack;
+			NTRACKDIV_COUNT++;
 			}
 		for (j=0; j<nfacetdiv; j++)
 			{

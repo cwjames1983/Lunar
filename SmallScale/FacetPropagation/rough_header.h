@@ -149,6 +149,10 @@ int MAX_FDIV=0;
 long long int LOOP_COUNT=0;
 long int NSPLITCALLS=0;
 long double MAX_CURVE=0.;
+
+//Charlie's stuff
+int16_t NTRACKDIV_COUNT = 0;
+
 //switches: for output
 int domags=0;
 long double FDIV_FACTOR=1000.;
