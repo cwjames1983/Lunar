@@ -30,7 +30,7 @@ Oh well, bugger it...
 #include <complex>
 
 #include "../../Utilities/long_constants.h"
-#include "/usr/local/include/fftw3.h"
+#include "/pawsey/mwa_sles12sp4/devel/cascadelake/gcc/8.3.0/openmpi-ucx-gpu/4.0.3/fftw/3.3.8/include/fftw3.h"
 
 using namespace std;
 struct track
