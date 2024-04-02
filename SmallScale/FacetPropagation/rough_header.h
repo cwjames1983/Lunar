@@ -28,6 +28,7 @@ Oh well, bugger it...
 #include <ctype.h>
 #include <time.h>
 #include <complex>
+#include <omp.h>
 
 #include "../../Utilities/long_constants.h"
 #include "/pawsey/mwa_sles12sp4/devel/cascadelake/gcc/8.3.0/openmpi-ucx-gpu/4.0.3/fftw/3.3.8/include/fftw3.h"
@@ -128,7 +129,7 @@ long double LU_MAX_SDIF, LU_MAX_PDIF, LU_MAX_TDIF;
 long double LOG_LU_MINS, LOG_LU_MAXS;
 */
 
-// NOT INCCLUDED!!!!
+// NOT INCLUDED!!!!
 // for determining fresnel zone
 // calculated for each frequency range / output direction / facet
 //bool ****INFZONE;

@@ -27,6 +27,7 @@ int FMODE=1;
 int NIX, NIY;
 
 #include "rough_header.h"
+#include <omp.h>
 
 int main(void) {
 	
