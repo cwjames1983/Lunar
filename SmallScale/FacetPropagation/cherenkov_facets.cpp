@@ -622,7 +622,7 @@ void cherenkov(int if0, int nfs, facet &subfacet, track &subtrack, int ifx, int 
 			}
 		}
 		//18/04/2024 CMW tests. This function might need to be parallisable
-		std::cout<<"I just did a cherenkov calculation!"<<std::endl;
+		//std::cout<<"I just did a cherenkov calculation!"<<std::endl;
 	}
 
 // ########### SET OF ROUTINES FOR CALCULATING VISIBILITY ###########
