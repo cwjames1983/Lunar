@@ -1,4 +1,4 @@
-3 0.1 1e-8 20 1 1e-6 0 0 1 2
+3 0.001 1e-8 20 1 1e-6 0 0 1 40
 1 SurfaceFiles/trivial_448.dat
 
 1 0 0 0 
@@ -9,11 +9,11 @@ TrackFiles/trivial_tracks.dat
 0 0 5  
 901 0 90
 2 1e8 1e9 1
-Outputs/Statistics/quick_448.log
-0 Outputs/Frequencies/frequencies // columns are const theta, rows are const phi, tables const frequency
+Outputs/Statistics/model_D.log
+1 Outputs/Frequencies/frequencies // columns are const theta, rows are const phi, tables const frequency
 1 Outputs/Phis/phi // columns are const freq, rows are const theta, tables const phi
-0 Outputs/Thetas/theta // theta file
-0 Output/Time/time // time file
+1 Outputs/Thetas/theta // theta file
+1 Output/Time/time // time file
 
 
 
@@ -26,14 +26,14 @@ Line 1:
 	SIN_APPROX (1e-10 value below which to approximate sin x as x)
 	MAX_SPLITS [=0] (max number of splits of facets near Cherenkov angle)
 	FMODE (=1 to loop facets as inner loop, =2 to loop as outer loop. Use 1 unless a very large surface)
-	SIN_APPROX_2 [=1e-6] (value for approx sin x = x in generating specular vectors)
+	SIN_APPROX_2 (=1e-6) (value for approx sin x = x in generating specular vectors)
 	TDIV_METHOD [=0] (method for dividing tracks. If > 0 then force TDIVS = this value.)
 	TDIV_CONST [=0] for the tracks to be 'intelligently' split up to TDIV_METHOD times. [=1] to force the number of track divisions to TDIV_METHOD
 	FDIVMETHOD [=1] (method for dividing facets. If > 0 force FDIV=this value)
 	FDIV_FACTOR (factor between highest and lowest frequencies where track facet splitting is identical)
 
 Line 2:
-	Input File Type (=2) [type of input file - binary=2 or text=1] (input file for surfaces)
+	Input File Type (=2) [type of input file - binary=2 or text=1) (input file for surfaces)]
 	Input surface file name [name of surface file!]
 	
 Line 3:
@@ -43,11 +43,11 @@ Line 3:
 	NCONCAT (=0) [concatenates surface by this many elements in each direction]
 
 Line 4:
-	WRITEMODYN (=0) [write the modofied surface for later use? 0 = no]
+	WRITEMODYN (=0) [write the modified surface for later use? 0 = no]
 	MODSURF_FILE (='') [name to write mod surf under. MUST be present!]
 
 Line 5:
-	TRACKFILE [name of file containing info on the CHerenkov tracks]
+	TRACKFILE [name of file containing info on the Cherenkov tracks]
 
 Line 6:
 	THETA (=0) [angle to rotate tracks in x-y plane - 0 in x-direction only]
@@ -91,4 +91,5 @@ Line 12-15:
 	where the name on the first three corresponds to what is held constant in each block.
 	
 	
+
 

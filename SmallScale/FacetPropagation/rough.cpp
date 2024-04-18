@@ -28,8 +28,7 @@ int NIX, NIY;
 
 #include "rough_header.h"
 
-int main()
-	{
+int main(void) {
 	
 // generic and input variables
 	int i,j,k, OK, ix, iy;
@@ -117,7 +116,13 @@ int main()
 		cout<<"Error in reading track file: returning..."<<endl;
 		return 0;
 		}
-	cout<<"There are "<<ntracks<<" tracks in the track file."<<endl;
+
+	if (ntracks != 1) {
+		std::cout<<"There are "<<ntracks<<" tracks in the track file."<<std::endl;
+	}
+	else {
+		std::cout<<"There is "<<ntracks<<" track in the track file."<<std::endl;
+	}
 	
 //	print_tracks(0,tracks, ntracks,-1);
 	
@@ -258,12 +263,15 @@ At this point we have some tracks, and a surface. Now we want to specify at what
 				init_facet(surface, NX, NY, ix, iy);
 				}
 			// loops through tracks
-			for (i=0; i<ntracks; i++)
-				{
+
+
+
+//---------------------ACTUAL TRACK AND FACET LOOPING SCOPE---------------------
+ 
+			for (i=0; i<ntracks; i++) {
 				// does this for all facets, unless skipped; begins with facets directly above
-				for (j=0; j<NFDIVS; j++)
-					{
-				//	cout<<"looping facets for track "<<i<<" and frequency division "<<j<<".\n";
+				for (j=0; j<NFDIVS; j++) {
+					std::cout<<"Currently looping facets for track "<<i<<".\n";
 					LOOP_COUNT=0;
 					WRITESURF=0;
 				/*	for (k=0; k<SURF_nsurfs; k++)
@@ -271,18 +279,22 @@ At this point we have some tracks, and a surface. Now we want to specify at what
 				//	cout<<i<<" "<<j<<" "<<SURF_intracks[k]<<" "<<FDIV_STARTS[j]<<" "<<SURF_infreqs[k]<<" "<<FDIV_STARTS[j]+NPERFDIV[j]<<endl;
 					if (i==SURF_intracks[k] && FDIV_STARTS[j]<=SURF_infreqs[k] && FDIV_STARTS[j]+NPERFDIV[j] > SURF_infreqs[k]) {WRITESURF=1; SURF_file.open(SURF_surfnames+k*mfl); break;}
 					} */
-					if (FMODE == 1)
-						{
+					
+					if (FMODE == 1) {
 						loop_facets(tracks[i], FDIV_STARTS[j], NPERFDIV[j], surface);
-						}
-					else if (FMODE==2)
-						{
+					}
+					else if (FMODE==2) {
 						div_facet_track(tracks[i], FACETS[0][0], FDIV_STARTS[j], NPERFDIV[j], ix, iy, surface);
-						}
-					if (WRITESURF==1) {SURF_file.close();}
-					if (FMODE == 1) {cout<<"   ... looped through "<<LOOP_COUNT<<" loops."<<endl;}
+					}
+					
+					if (WRITESURF==1) {
+						SURF_file.close();
+					}
+					if (FMODE == 1) {
+						cout<<"   ... looped through "<<LOOP_COUNT<<" loops."<<endl;
 					}
 				}
+			}
 			}
 		}
 	
@@ -292,12 +304,15 @@ At this point we have some tracks, and a surface. Now we want to specify at what
 	cout<<"Maximum divisions...\n...of tracks: "<<MAX_TDIV<<"\n...of facets: "<<MAX_FDIV<<endl;
 	cout<<"We had a total of "<<N_VISIBLE<<" visible subfacets, and "<<N_INVISIBLE<<" where the output path was blocked"<<endl;
 	cout<<"Facets were split "<<NSPLITCALLS<<" times.\n";
+	cout<<"Tracks were divided "<<NTRACKDIV_COUNT<<" times.\n";
 	
 // ########## Program has finished - write info ###########
 
 	write_stats(stats_file, rnx, rny);
 	write_all_outputs(freqyn, freq_file, thetayn, theta_file, phiyn, phi_file, timeyn, time_file);
-	}
+
+	return 0; //CMW coding etiquette
+}
 
 
 
@@ -319,8 +334,7 @@ At this point we have some tracks, and a surface. Now we want to specify at what
 
 
 
-void write_stats(char *file, int rnx, int rny)
-	{
+void write_stats(char *file, int rnx, int rny) {
 	ofstream out;
 	int i,j,k;
 	cout<<"writing stats to file "<<file<<endl;
@@ -394,6 +408,7 @@ void write_stats(char *file, int rnx, int rny)
 	out<<"Max num track divs = "<<MAX_TDIV<<"\n";
 	out<<"Max num facet divs = "<<MAX_FDIV<<"\n";
 	out<<"Facets were split "<<NSPLITCALLS<<" times.\n";
+	out<<"Tracks were divided "<<NTRACKDIV_COUNT<<" times.\n";
 	
 	out<<"\n\n\n\n\n#Visibility stats:\n";
 	out<<"# Theta    phi   Good    Badcos    Blocked\n";
@@ -412,7 +427,8 @@ void write_stats(char *file, int rnx, int rny)
 		}
 	out.close();
 	cout<<"done"<<endl;
-	}
+
+}
 
 void write_all_outputs(int freqyn, char *freq_file, int thetayn, char *theta_file, int phiyn, char *phi_file, int timeyn, char *time_file)
 	{

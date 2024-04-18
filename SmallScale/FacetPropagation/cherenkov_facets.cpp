@@ -1,4 +1,4 @@
-
+#include "rough_header.h"
 // just gets the facet immediately above the track - obviously, this is pretty stupid
 // in terms of a starting facet, but oh well!
 void get_facet_0(track &atrack, int &ix0, int &iy0)
@@ -76,8 +76,7 @@ void split_facet(track &subtrack, facet &subfacet, int if0, int nfs, int ifx, in
 
 // the conditions imposed are:
 // the maximum wavelength offsets 
-void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, int ify, float *surface)
-	{
+void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, int ify, float *surface) {
 	long double maxf, eff_lambda, base_distance, wave_curvature;
 	long double vtemp[3], v0[3], eff_wavelength, dnfacetdiv, dntrackdiv;
 	int i,j,k,l,m;
@@ -131,17 +130,16 @@ void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, in
 	dntrackdiv=(long double) ntrackdiv;
 	
 	// logs greatest number of divisions
-	if ( TDIV_CONST )
-		{
-		
+	if ( TDIV_CONST ) {
 		ntrackdiv = MAX_TDIV;
+		
 		if( ntrackdiv == 0) {ntrackdiv = 1;}
 			// line added to print the value of ntrackdiv 12/11/2023:
 			//std::cout<<"ntrackdiv is now "<<ntrackdiv<<std::endl;
 		}
 	else if ( ntrackdiv > MAX_TDIV ) { 
 		MAX_TDIV=ntrackdiv; 
-			//std::cout<<"ntrackdiv was  > MAX_TDIV and ntrackdiv is now "<<ntrackdiv<<std::endl;
+		//std::cout<<"ntrackdiv was  > MAX_TDIV and ntrackdiv is now "<<ntrackdiv<<std::endl;
 		}
 	if (nfacetdiv > MAX_FDIV) {MAX_FDIV=nfacetdiv;}
 	
@@ -157,8 +155,12 @@ void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, in
 		}
 	
 	// This forces the size of every (sub)facet to be equal. We must of course be careful later to calculate the incident E-fields according to projected area (this is a real weighting).
-	
-	if (nfacetdiv == 1) {subfacets=&afacet;}
+
+
+// THIS IS WHERE ALL THE SUB DIVISIONS HAPPEN
+
+	//Just works out the subfacet divisions
+	if (nfacetdiv == 1) {subfacets=&afacet;} //
 	else
 	 	{
 		subfacets = SUBFACETS;
@@ -171,22 +173,27 @@ void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, in
 			}
 		}
 	
-	for (i=0; i<ntrackdiv; i++)
-		{
-		if (ntrackdiv == 1)
-			{
+	for (i=0; i<ntrackdiv; i++) {
+		if (ntrackdiv == 1) {
 			usetrack = &atrack;
-			}
-		else
-			{
+		}
+		
+		else {
 			gensubtrack(atrack, dntrackdiv, i, subtrack);
 			usetrack = &subtrack;
 			NTRACKDIV_COUNT++;
-			}
-		for (j=0; j<nfacetdiv; j++)
-			{
-			for (k=0; k<nfacetdiv; k++)
-				{
+			//TESTS from CMW 22/03/2024
+			//Seeing what actually happens when subtracks are generated.
+
+			// std::cout<<"Now on subtrack "<<i<<"\n";
+			// std::cout<<"t0 = "<<usetrack->t0<<"\n";
+			// std::cout<<"x0 = "<<usetrack->x0<<"\n";
+			// std::cout<<"y0 = "<<usetrack->y0<<"\n";
+			// std::cout<<"z0 = "<<usetrack->z0<<"\n";
+		}
+		
+		for (j=0; j<nfacetdiv; j++) {
+			for (k=0; k<nfacetdiv; k++) {
 			/*	if (WRITESURF && i==0)
 					{
 					for (l=0; l<4; l++)
@@ -200,11 +207,14 @@ void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, in
 					} */
 				// put Cherenkov calculation as a function of frequencies here
 				cherenkov(if0, nfs, subfacets[j*nfacetdiv+k], *usetrack, ifx, ify, surface,0);
-				}
 			}
 		}
-//	if (nfacetdiv != 1) {delete [] subfacets; subfacets=0;}
 	}
+	
+	//Self-destruct button for subtrack continuity testing/
+	//abort();
+//	if (nfacetdiv != 1) {delete [] subfacets; subfacets=0;}
+}
 
 // creates a random vector to use as a basis for calculating a perpendicular.
 void gen_random_perp(long double vec1[3], long double vec2[3], long double vec3[3])
@@ -611,6 +621,8 @@ void cherenkov(int if0, int nfs, facet &subfacet, track &subtrack, int ifx, int 
 				}
 			}
 		}
+		//18/04/2024 CMW tests. This function might need to be parallisable
+		std::cout<<"I just did a cherenkov calculation!"<<std::endl;
 	}
 
 // ########### SET OF ROUTINES FOR CALCULATING VISIBILITY ###########

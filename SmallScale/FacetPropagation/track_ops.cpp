@@ -1,5 +1,4 @@
-void gensubtrack(track &atrack, long double ntdiv, int nthdiv, track &subtrack)
-	{
+void gensubtrack(track &atrack, long double ntdiv, int nthdiv, track &subtrack) {
 	long double k1,k2;
 	int i;
 	k1=nthdiv/ntdiv;
@@ -36,9 +35,7 @@ void gensubtrack(track &atrack, long double ntdiv, int nthdiv, track &subtrack)
 	subtrack.q=atrack.q;
 	
 	subtrack.beta=atrack.beta;
-	}
-
-
+}
 
 // assumes the tracks are such that z is the shower axis, and x/y are perpendicular to this. We want a 'standard' 0-transform though to correspond to the cascade being parallel to the surface, i.e. the shower axis in the xy plane. So I swap the cascade x and z. // theta positive is into the surface, -ve is upwards. phi +ve is towards +ve y direction; 0 is x direction
 void transform_tracks(long double theta, long double phi, long double dx, long double dy, long double dz, int ntracks, track *tracks)
