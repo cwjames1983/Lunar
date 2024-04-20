@@ -172,9 +172,9 @@ void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, in
 			}
 		}
 //CMW 02-04-2024 making changes for parallelisation here
-#pragma omp parallel
-{
-    int thread_id =omp_get_thread_num();
+//#pragma omp parallel
+//{
+    //int thread_id =omp_get_thread_num();
 	for (i=0; i<ntrackdiv; i++)
 		{
 		if (ntrackdiv == 1)
@@ -186,7 +186,6 @@ void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, in
 			gensubtrack(atrack, dntrackdiv, i, subtrack);
 			usetrack = &subtrack;
 			NTRACKDIV_COUNT++;
-            std::cout<<"Hello from thread "<<thread_id<<"!\n";
 			}
 		for (j=0; j<nfacetdiv; j++)
 			{
@@ -208,7 +207,6 @@ void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, in
 				}
 			}
 		}
-}
 //	if (nfacetdiv != 1) {delete [] subfacets; subfacets=0;}
 	}
 

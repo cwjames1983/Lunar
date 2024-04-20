@@ -1,14 +1,15 @@
 #!/bin/bash -login
 
-#SBATCH --job-name=roughtest
+#SBATCH --job-name=ModD
 #SBATCH --account=mwavcs
 #SBATCH --partition=workq
 #SBATCH --ntasks=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=1
-#SBATCH --time=00:00:30
-#SBATCH --output=Outputs/Gary/%x.out
+#SBATCH --time=00:07:00
+#SBATCH --output=Outputs/Terminal/%x.out
 
 
 #Change the input file to what you need.
-srun ./rough.exe < Inputs/quick_64.in
+
+srun ./rough.exe < Inputs/modD.in
