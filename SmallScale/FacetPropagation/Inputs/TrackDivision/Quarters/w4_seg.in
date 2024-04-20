@@ -1,0 +1,94 @@
+3 0.1 1e-8 20 1 1e-6 0 0 1 2
+1 SurfaceFiles/trivial_64.dat
+
+1 0 0 0 
+0 modded_trivial.dat
+TrackFiles/Divisions/Quarters/trivial_4m_seg.dat
+0   0    0.0    0.0    10.0
+1.8 1.8 18e10
+0 0 5  
+901 0 90
+2 1e8 1e9 1
+Outputs/Statistics/w4_seg.log
+0 Outputs/Frequencies/frequencies // columns are const theta, rows are const phi, tables const frequency
+1 Outputs/Phis/phi // columns are const freq, rows are const theta, tables const phi
+0 Outputs/Thetas/theta // theta file
+0 Output/Time/time // time file
+
+
+
+
+
+
+Line 1:
+	USE_WHICH (3 method for interpolating a facet from three points: always = 3)
+	ERROR_MARGIN ( 0.001 fractional error margin - 0.01 = 1% - for discretionary track etc divisions)
+	SIN_APPROX (1e-10 value below which to approximate sin x as x)
+	MAX_SPLITS [=0] (max number of splits of facets near Cherenkov angle)
+	FMODE (=1 to loop facets as inner loop, =2 to loop as outer loop. Use 1 unless a very large surface)
+	SIN_APPROX_2 (=1e-6] (value for approx sin x = x in generating specular vectors)
+	TDIV_METHOD [=0] (method for dividing tracks. If > 0 then force TDIVS = this value.)
+	TDIV_CONST [=0] for the tracks to be 'intelligently' split up to TDIV_METHOD times. [=1] to force the number of track divisions to TDIV_METHOD
+	FDIVMETHOD [=1] (method for dividing facets. If > 0 force FDIV=this value)
+	FDIV_FACTOR (factor between highest and lowest frequencies where track facet splitting is identical)
+
+Line 2:
+	Input File Type (=2) [type of input file - binary=2 or text=1) (input file for surfaces)
+	Input surface file name [name of surface file!]
+	
+Line 3:
+	NAVERAGED (=1) [creates facets larger by this factor]
+	NOSX (=0) [begins new surface at this x offset]
+	NOSY (=0) [begins new surfce at this y offset]
+	NCONCAT (=0) [concatenates surface by this many elements in each direction]
+
+Line 4:
+	WRITEMODYN (=0) [write the modofied surface for later use? 0 = no]
+	MODSURF_FILE (='') [name to write mod surf under. MUST be present!]
+
+Line 5:
+	TRACKFILE [name of file containing info on the CHerenkov tracks]
+
+Line 6:
+	THETA (=0) [angle to rotate tracks in x-y plane - 0 in x-direction only]
+	PHI (=0) [angle to rotate tracks towards z from x-y plane: 0 = in x-y plane]
+	DX (=0) [distance (m) in x-direction from the centre of the surface to place track starting position]
+	DY (=0) [as above for y-direction]
+	DEPTH (=10) [depth, m, below local surface to place tracks]
+	
+Line 7:
+	REFNi 1.8 [refractive index of incident side]
+	REFNt (=1.0) [refractive index of transmitted side]
+	ATTN_ELL (=18) [field attenuation length, metres, at 1 GHz]
+
+Line 8:
+	PHI0 (=0) [central value of phi to use]
+	HNPHI (=90) [degrees offset between phis]
+	DPHI (=0) [number of phi to place each side around the centre]
+
+Line 9:
+	NTHETAS (=90) [number of thetas to use]
+	THETA0 (=1) [minimum theta to use, degrees]
+	THETA1 (=90) [maximum theta to use]
+	
+Line 10:
+	NFREQS (=100) [number of frequency points to use]
+	F0 (=1e8) [minimum frequency of interest (Hz)]
+	F1 (=1e9) [maximum frequency of interest (Hz)]
+	LOGYN (=0) [use log-spacing? 0 is no, 1=yes]
+
+Line 11:
+	Stats file name. Just outputs many statistics. Leave this unchanged.
+
+Line 12-15:
+	Output file specs: the format is [writeyn] (0=no, 1=yes) then 'filename'.
+	Files are ordered as:
+	freqs
+	phi
+	theta
+	time [-domain files]
+	
+	where the name on the first three corresponds to what is held constant in each block.
+	
+	
+
