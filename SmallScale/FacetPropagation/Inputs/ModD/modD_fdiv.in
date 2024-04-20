@@ -1,19 +1,19 @@
-3 0.001 1e-8 20 1 1e-6 0 0 1 40
+3 0.001 1e-8 20 1 1e-6 4 0 1 40
 1 SurfaceFiles/trivial_448.dat
 
 1 0 0 0 
 0 modded_trivial.dat
-TrackFiles/trivial_tracks.dat
+TrackFiles/Divisions/trivial_4m.dat
 0   0    0.0    0.0    10.0
 1.8 1.8 18e10
 0 0 5  
 901 0 90
-2 1e8 1e9 1
-Outputs/Statistics/model_D.log
-1 Outputs/Frequencies/frequencies // columns are const theta, rows are const phi, tables const frequency
+1 1e8 1e9 1
+Outputs/Statistics/modD_fdiv.log
+0 Outputs/Frequencies/frequencies // columns are const theta, rows are const phi, tables const frequency
 1 Outputs/Phis/phi // columns are const freq, rows are const theta, tables const phi
-1 Outputs/Thetas/theta // theta file
-1 Output/Time/time // time file
+0 Outputs/Thetas/theta // theta file
+0 Output/Time/time // time file
 
 
 

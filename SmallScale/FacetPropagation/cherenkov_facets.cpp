@@ -1,4 +1,4 @@
-#include "omp.h"
+#include "rough_header.h"
 
 // just gets the facet immediately above the track - obviously, this is pretty stupid
 // in terms of a starting facet, but oh well!
@@ -172,10 +172,17 @@ void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, in
 			}
 		}
 //CMW 02-04-2024 making changes for parallelisation here
-//#pragma omp parallel
-//{
-    //int thread_id =omp_get_thread_num();
-	for (i=0; i<ntrackdiv; i++)
+#pragma omp parallel
+{
+    //Variables that help distribute blocks of code amongst threads:
+    int id = omp_get_thread_num();
+    int nthreads = omp_get_num_threads();
+
+    //Setting up the for loop this way distributes calculations
+    //For n threads, every iteration of i that is a multiple of n will execute
+    //the code.
+
+	for (i=id; i<ntrackdiv; i=i+nthreads)
 		{
 		if (ntrackdiv == 1)
 			{
@@ -187,9 +194,12 @@ void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, in
 			usetrack = &subtrack;
 			NTRACKDIV_COUNT++;
 			}
-		for (j=0; j<nfacetdiv; j++)
+        //Preserving the original code as to not cause irreparable damage
+		//for (j=0; j<nfacetdiv; j++)
+		for (j=id; j<nfacetdiv; j=j+nthreads)
 			{
-			for (k=0; k<nfacetdiv; k++)
+			//for (k=0; k<nfacetdiv; k++)
+			for (k=id; k<nfacetdiv; k=k+nthreads)
 				{
 			/*	if (WRITESURF && i==0)
 					{
@@ -204,11 +214,16 @@ void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, in
 					} */
 				// put Cherenkov calculation as a function of frequencies here
 				cherenkov(if0, nfs, subfacets[j*nfacetdiv+k], *usetrack, ifx, ify, surface,0);
+                
+                //Test line to see if parallelisation works
+                std::cout<<"Hello from thread "<<id<<"!\n";
+
 				}
 			}
 		}
 //	if (nfacetdiv != 1) {delete [] subfacets; subfacets=0;}
-	}
+} //End brace of the pragma omp block.
+    }
 
 // creates a random vector to use as a basis for calculating a perpendicular.
 void gen_random_perp(long double vec1[3], long double vec2[3], long double vec3[3])
