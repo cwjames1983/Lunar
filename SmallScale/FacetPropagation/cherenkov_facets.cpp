@@ -105,6 +105,7 @@ void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, in
 	dr=ddist/base_distance; // clearly delta r
 	wave_curvature=(1.-mindot)*base_distance/eff_wavelength;
 	ntrackdiv = (int) (max(dr/TRACK_DIST_ERROR, wave_curvature/TRACK_LAMBDA_ERROR))+1;
+	// std::cout<<"ntrack div has just been declared as "<<ntrackdiv<<".\n";
 	
 	if (TDIV_METH > 0) {ntrackdiv=TDIV_METH;} // sets number of track devisions: for hard-coded testing
 	
@@ -172,7 +173,7 @@ void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, in
 				}
 			}
 		}
-	
+	//if(ntrackdiv>0){
 	for (i=0; i<ntrackdiv; i++) {
 		if (ntrackdiv == 1) {
 			usetrack = &atrack;
@@ -185,12 +186,17 @@ void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, in
 			//TESTS from CMW 22/03/2024
 			//Seeing what actually happens when subtracks are generated.
 
-			// std::cout<<"Now on subtrack "<<i<<"\n";
-			// std::cout<<"t0 = "<<usetrack->t0<<"\n";
-			// std::cout<<"x0 = "<<usetrack->x0<<"\n";
-			// std::cout<<"y0 = "<<usetrack->y0<<"\n";
-			// std::cout<<"z0 = "<<usetrack->z0<<"\n";
+			std::cout<<"Now on subtrack "<<i<<"\n";
+			std::cout<<"t0 = "<<usetrack->t0<<"\n";
+			std::cout<<"x0 = "<<usetrack->x0<<"\n";
+			std::cout<<"y0 = "<<usetrack->y0<<"\n";
+			std::cout<<"z0 = "<<usetrack->z0<<"\n";
 		}
+		
+		//Markers just to see if ntrackdiv is governing the number of tracks... div
+		// std::cout<<"i is "<<i<<"\n";
+		// std::cout<<"ntrackiv IS NOW "<<ntrackdiv<<"\n";
+		// std::cout<<"TRACK DIV IS NOW "<<NTRACKDIV_COUNT<<"\n";
 		
 		for (j=0; j<nfacetdiv; j++) {
 			for (k=0; k<nfacetdiv; k++) {

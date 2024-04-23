@@ -151,7 +151,7 @@ long int NSPLITCALLS=0;
 long double MAX_CURVE=0.;
 
 //Charlie's stuff
-int16_t NTRACKDIV_COUNT = 0;
+long NTRACKDIV_COUNT = 0;
 
 //switches: for output
 int domags=0;

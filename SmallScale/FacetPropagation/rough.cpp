@@ -60,6 +60,10 @@ int main(void) {
 // misc temporary variables
 	float fmemory; // memory used for facets
 	int sqrtn, reportn;
+
+//Counters set to zero
+
+
 // ######## program starts ##########	
 	
 	cin>>USE_WHICH>>ERROR_MARGIN>>SIN_APPROX>>MAX_SPLITS>>FMODE>>SIN_APPROX_2>>TDIV_METH>>TDIV_CONST>>FDIV_METH>>FDIV_FACTOR; cin.getline(tempstring,mfl);
