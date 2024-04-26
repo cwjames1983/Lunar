@@ -77,8 +77,7 @@ void split_facet(track &subtrack, facet &subfacet, int if0, int nfs, int ifx, in
 
 // the conditions imposed are:
 // the maximum wavelength offsets 
-void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, int ify, float *surface)
-	{
+void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, int ify, float *surface) {
 	long double maxf, eff_lambda, base_distance, wave_curvature;
 	long double vtemp[3], v0[3], eff_wavelength, dnfacetdiv, dntrackdiv;
 	int i,j,k,l,m;
@@ -176,13 +175,14 @@ void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, in
 {
     //Variables that help distribute blocks of code amongst threads:
     int id = omp_get_thread_num();
-    int nthreads = omp_get_num_threads();
-
+	int nthreads = omp_get_num_threads();
+	//std::cout<<"Hello from thread "<<id<<" of "<<nthreads<<"!\n";
     //Setting up the for loop this way distributes calculations
     //For n threads, every iteration of i that is a multiple of n will execute
     //the code.
 
-	for (i=id; i<ntrackdiv; i=i+nthreads)
+	for(i=id;i<ntrackdiv;i=i+nthreads)
+	//for (i=id; i<ntrackdiv; i=i+nthreads)
 		{
 		if (ntrackdiv == 1)
 			{
@@ -195,11 +195,9 @@ void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, in
 			NTRACKDIV_COUNT++;
 			}
         //Preserving the original code as to not cause irreparable damage
-		//for (j=0; j<nfacetdiv; j++)
-		for (j=id; j<nfacetdiv; j=j+nthreads)
+		for (j=0; j<nfacetdiv; j++)
 			{
-			//for (k=0; k<nfacetdiv; k++)
-			for (k=id; k<nfacetdiv; k=k+nthreads)
+			for (k=0; k<nfacetdiv; k++)
 				{
 			/*	if (WRITESURF && i==0)
 					{
@@ -214,17 +212,15 @@ void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, in
 					} */
 				// put Cherenkov calculation as a function of frequencies here
 				cherenkov(if0, nfs, subfacets[j*nfacetdiv+k], *usetrack, ifx, ify, surface,0);
-                
-                //Test line to see if parallelisation works
-                std::cout<<"Hello from thread "<<id<<"!\n";
-
+                //std::cout<<"Hello from thread "<<id<<" of "<<nthreads<<"!\n";	
+				std::cout<<"i is now "<<i<<".\n";	
 				}
 			}
 		}
 //	if (nfacetdiv != 1) {delete [] subfacets; subfacets=0;}
-} //End brace of the pragma omp block.
+ //End brace of the pragma omp block.
     }
-
+	}
 // creates a random vector to use as a basis for calculating a perpendicular.
 void gen_random_perp(long double vec1[3], long double vec2[3], long double vec3[3])
 	{
