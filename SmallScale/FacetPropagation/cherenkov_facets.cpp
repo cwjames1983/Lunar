@@ -181,7 +181,7 @@ void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, in
     //For n threads, every iteration of i that is a multiple of n will execute
     //the code.
 
-	for(i=id;i<ntrackdiv;i=i+nthreads)
+	for(i=id;i<ntrackdiv;i+=nthreads)
 	//for (i=id; i<ntrackdiv; i=i+nthreads)
 		{
 		if (ntrackdiv == 1)
@@ -211,9 +211,23 @@ void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, in
 					SURF_file<<"\n";
 					} */
 				// put Cherenkov calculation as a function of frequencies here
+				//facet temp = subfacets[j*nfacetdiv+k];
+				// #pragma omp barrier
+				// 	std::cout<<"VARIABLE CHECK: \n";
+				// 	std::cout<<"if0 = "<<if0<<std::endl;
+				// 	std::cout<<"nfs = "<<nfs<<std::endl;
+				// 	//std::cout<<"subfacet = "<<temp<<std::endl;
+				// 	std::cout<<"ifx = "<<ifx<<std::endl;
+				// 	std::cout<<"ify = "<<ify<<std::endl;
+				// 	std::cout<<"surface = "<<surface<<std::endl;
+				// #pragma barrier
+				// 	std::cout<<"SUBTRACK CHECK:\n";
+				// 	std::cout<<"x0 is "<<usetrack->x0<<".\n";
+
 				cherenkov(if0, nfs, subfacets[j*nfacetdiv+k], *usetrack, ifx, ify, surface,0);
-                //std::cout<<"Hello from thread "<<id<<" of "<<nthreads<<"!\n";	
-				std::cout<<"i is now "<<i<<".\n";	
+				#pragma omp critical
+					std::cout<<"Hello from thread "<<id<<" of "<<nthreads<<"!\n";	
+				//std::cout<<"i is now "<<i<<".\n";	
 				}
 			}
 		}
@@ -610,15 +624,21 @@ void cherenkov(int if0, int nfs, facet &subfacet, track &subtrack, int ifx, int 
 					
 					
 					// Go phases! They start off imaginary, then evolve with time to...
+					//#pragma omp barrier
+					//{
+				#pragma omp critical		
 					EZ[i][j][2*k] += A * sin_phase0 * Cz; // real
+				#pragma omp critical
 					EXY[i][j][2*k] += A * sin_phase0 * Cxy;
+				#pragma omp critical
 					EZ[i][j][2*k+1] += A * cos_phase0 * Cz; // imaginary
+				#pragma omp critical
 					EXY[i][j][2*k+1] += A * cos_phase0 * Cxy;
-					if (isnan(EZ[i][j][2*k]) || isnan(EZ[i][j][2*k+1]) || isnan(EXY[i][j][2*k]) || isnan(EXY[i][j][2*k+1]))
-						{
+				if (isnan(EZ[i][j][2*k]) || isnan(EZ[i][j][2*k+1]) || isnan(EXY[i][j][2*k]) || isnan(EXY[i][j][2*k+1]))
+					{
 						cout<<"isnan!"<<endl;
-						}
 					}
+				}
 				}
 			else
 				{
