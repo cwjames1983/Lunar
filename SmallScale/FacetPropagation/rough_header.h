@@ -154,6 +154,11 @@ long double MAX_CURVE=0.;
 
 //Charlie's stuff
 int16_t NTRACKDIV_COUNT = 0;
+long THREAD_LOOP_0 = 0;
+long THREAD_LOOP_1 = 0;
+long THREAD_LOOP_2 = 0;
+long THREAD_LOOP_3 = 0;
+
 
 //switches: for output
 int domags=0;

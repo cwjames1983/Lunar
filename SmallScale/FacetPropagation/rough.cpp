@@ -309,7 +309,14 @@ At this point we have some tracks, and a surface. Now we want to specify at what
 	cout<<"We had a total of "<<N_VISIBLE<<" visible subfacets, and "<<N_INVISIBLE<<" where the output path was blocked"<<endl;
 	cout<<"Facets were split "<<NSPLITCALLS<<" times.\n";
 	cout<<"Tracks were divided "<<NTRACKDIV_COUNT<<" times.\n";
-	
+
+	//27-04-2024 Checking thread-loop distribution
+	cout<<"Thread divisions:\n";
+	cout<<"Thread 0: "<<THREAD_LOOP_0<<" divisions.\n";
+	cout<<"Thread 1: "<<THREAD_LOOP_1<<" divisions.\n";
+	cout<<"Thread 2: "<<THREAD_LOOP_2<<" divisions.\n";
+	cout<<"Thread 3: "<<THREAD_LOOP_3<<" divisions.\n";
+
 // ########## Program has finished - write info ###########
 
 	write_stats(stats_file, rnx, rny);

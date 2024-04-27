@@ -171,19 +171,27 @@ void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, in
 			}
 		}
 //CMW 02-04-2024 making changes for parallelisation here
-#pragma omp parallel
+#pragma omp parallel//reduction(+:EXY) reduction(+:EZ)
 {
     //Variables that help distribute blocks of code amongst threads:
-    int id = omp_get_thread_num();
-	int nthreads = omp_get_num_threads();
+    //int id, nthreads;
 	//std::cout<<"Hello from thread "<<id<<" of "<<nthreads<<"!\n";
     //Setting up the for loop this way distributes calculations
     //For n threads, every iteration of i that is a multiple of n will execute
     //the code.
+	int id = omp_get_thread_num();
+	int nthreads = omp_get_num_threads();
+//	std::cout<<"ntrackdiv is "<<ntrackdiv<<std::endl;
+	//#pragma omp parallel for num_threads(4)
+		//for(i=0;i<ntrackdiv;i++) {
+	for (i=id; i<ntrackdiv; i=i+nthreads) {
+			// if(i!=id) {
+			// 	std::cout<<"Skipped"<<std::endl;
+			// }
+			// else {
 
-	for(i=id;i<ntrackdiv;i+=nthreads)
-	//for (i=id; i<ntrackdiv; i=i+nthreads)
-		{
+		// int id = omp_get_thread_num();
+		// int nthreads = omp_get_num_threads();			
 		if (ntrackdiv == 1)
 			{
 			usetrack = &atrack;
@@ -192,8 +200,38 @@ void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, in
 			{
 			gensubtrack(atrack, dntrackdiv, i, subtrack);
 			usetrack = &subtrack;
-			NTRACKDIV_COUNT++;
+			NTRACKDIV_COUNT=NTRACKDIV_COUNT+1;
+			//TESTS from CMW 22/03/2024
+			//Seeing what actually happens when subtracks are generated.
+
+			std::cout<<"Now on subtrack "<<i<<"\n";
+			std::cout<<"t0 = "<<usetrack->t0<<"\n";
+			std::cout<<"x0 = "<<usetrack->x0<<"\n";
+			std::cout<<"y0 = "<<usetrack->y0<<"\n";
+			std::cout<<"z0 = "<<usetrack->z0<<"\n";
+			
+			switch(id) {
+					case 0:
+						THREAD_LOOP_0++;
+
+					case 1:
+						THREAD_LOOP_1++;
+
+					case 2:
+						THREAD_LOOP_2++;
+
+					case 3:
+						THREAD_LOOP_3++;
+				} 
+
 			}
+			
+		// if(i==id){
+		// 	std::cout<<"true"<<std::endl;
+		// }
+		// else {
+		// 	std::cout<<"False"<<std::endl;
+		// }
         //Preserving the original code as to not cause irreparable damage
 		for (j=0; j<nfacetdiv; j++)
 			{
@@ -223,18 +261,21 @@ void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, in
 				// #pragma barrier
 				// 	std::cout<<"SUBTRACK CHECK:\n";
 				// 	std::cout<<"x0 is "<<usetrack->x0<<".\n";
-
+				
 				cherenkov(if0, nfs, subfacets[j*nfacetdiv+k], *usetrack, ifx, ify, surface,0);
 				#pragma omp critical
-					std::cout<<"Hello from thread "<<id<<" of "<<nthreads<<"!\n";	
+					std::cout<<"Hello from thread "<<id<<" of "<<nthreads<<"! The i variable is currently "<<i<<".\n";	
 				//std::cout<<"i is now "<<i<<".\n";	
-				}
+				
 			}
 		}
+	}
+	
+}
 //	if (nfacetdiv != 1) {delete [] subfacets; subfacets=0;}
  //End brace of the pragma omp block.
     }
-	}
+	//}
 // creates a random vector to use as a basis for calculating a perpendicular.
 void gen_random_perp(long double vec1[3], long double vec2[3], long double vec3[3])
 	{
@@ -627,13 +668,12 @@ void cherenkov(int if0, int nfs, facet &subfacet, track &subtrack, int ifx, int 
 					//#pragma omp barrier
 					//{
 				#pragma omp critical		
+				{	
 					EZ[i][j][2*k] += A * sin_phase0 * Cz; // real
-				#pragma omp critical
 					EXY[i][j][2*k] += A * sin_phase0 * Cxy;
-				#pragma omp critical
 					EZ[i][j][2*k+1] += A * cos_phase0 * Cz; // imaginary
-				#pragma omp critical
 					EXY[i][j][2*k+1] += A * cos_phase0 * Cxy;
+				}
 				if (isnan(EZ[i][j][2*k]) || isnan(EZ[i][j][2*k+1]) || isnan(EXY[i][j][2*k]) || isnan(EXY[i][j][2*k+1]))
 					{
 						cout<<"isnan!"<<endl;
