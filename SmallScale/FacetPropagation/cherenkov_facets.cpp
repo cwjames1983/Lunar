@@ -84,7 +84,6 @@ void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, in
 	int ntrackdiv, nfacetdiv;
 	long double fxs[3], fys[3], fzs[5], txs[3], tys[3], tzs[3], tts[3];
 	facet *subfacets=0;
-	track subtrack, *usetrack;
 	long double dist, ddist, dlambda, dr; //CMW 04-03-24 okay, maybe ddist is delta d.
 	long double mindot=1e10, ddot;
 	
@@ -171,27 +170,29 @@ void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, in
 			}
 		}
 //CMW 02-04-2024 making changes for parallelisation here
+	std::cout<<"Hello I am here"<<std::endl;
 #pragma omp parallel//reduction(+:EXY) reduction(+:EZ)
 {
     //Variables that help distribute blocks of code amongst threads:
-    //int id, nthreads;
-	//std::cout<<"Hello from thread "<<id<<" of "<<nthreads<<"!\n";
     //Setting up the for loop this way distributes calculations
     //For n threads, every iteration of i that is a multiple of n will execute
     //the code.
 	int id = omp_get_thread_num();
 	int nthreads = omp_get_num_threads();
+
+
+	
 //	std::cout<<"ntrackdiv is "<<ntrackdiv<<std::endl;
-	//#pragma omp parallel for num_threads(4)
-		//for(i=0;i<ntrackdiv;i++) {
+	// #pragma omp parallel for num_threads(4)
+		// for(i=0;i<ntrackdiv;i++) {
 	for (i=id; i<ntrackdiv; i=i+nthreads) {
 			// if(i!=id) {
 			// 	std::cout<<"Skipped"<<std::endl;
 			// }
 			// else {
-
-		// int id = omp_get_thread_num();
-		// int nthreads = omp_get_num_threads();			
+				track subtrack, *usetrack;
+				int id = omp_get_thread_num();
+				int nthreads = omp_get_num_threads();			
 		if (ntrackdiv == 1)
 			{
 			usetrack = &atrack;
@@ -263,8 +264,8 @@ void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, in
 				// 	std::cout<<"x0 is "<<usetrack->x0<<".\n";
 				
 				cherenkov(if0, nfs, subfacets[j*nfacetdiv+k], *usetrack, ifx, ify, surface,0);
-				#pragma omp critical
-					std::cout<<"Hello from thread "<<id<<" of "<<nthreads<<"! The i variable is currently "<<i<<".\n";	
+				// #pragma omp critical
+				// 	std::cout<<"Hello from thread "<<id<<" of "<<nthreads<<"! The i variable is currently "<<i<<".\n";	
 				//std::cout<<"i is now "<<i<<".\n";	
 				
 			}
@@ -667,13 +668,12 @@ void cherenkov(int if0, int nfs, facet &subfacet, track &subtrack, int ifx, int 
 					// Go phases! They start off imaginary, then evolve with time to...
 					//#pragma omp barrier
 					//{
-				#pragma omp critical		
-				{	
+					
 					EZ[i][j][2*k] += A * sin_phase0 * Cz; // real
 					EXY[i][j][2*k] += A * sin_phase0 * Cxy;
 					EZ[i][j][2*k+1] += A * cos_phase0 * Cz; // imaginary
 					EXY[i][j][2*k+1] += A * cos_phase0 * Cxy;
-				}
+	
 				if (isnan(EZ[i][j][2*k]) || isnan(EZ[i][j][2*k+1]) || isnan(EXY[i][j][2*k]) || isnan(EXY[i][j][2*k+1]))
 					{
 						cout<<"isnan!"<<endl;
