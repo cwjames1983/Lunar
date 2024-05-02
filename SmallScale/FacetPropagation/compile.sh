@@ -9,5 +9,6 @@ mkdir -p Outputs/Thetas;
 mkdir -p Outputs/Time;
 mkdir -p Outputs/Frequencies;
 mkdir -p Outputs/Statistics;
+mkdir -p TrackFiles/SubTracks;
 
 g++ -O2 -o rough.exe rough.cpp -lm "/usr/local/lib/libfftw3.a"
