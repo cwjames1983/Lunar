@@ -170,11 +170,8 @@ void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, in
 			}
 		}
 //CMW 02-04-2024 making changes for parallelisation here
-	std::cout<<"Hello I am here"<<std::endl;
 #pragma omp parallel//reduction(+:EXY) reduction(+:EZ)
 {
-    //Variables that help distribute blocks of code amongst threads:
-    //Setting up the for loop this way distributes calculations
     //For n threads, every iteration of i that is a multiple of n will execute
     //the code.
 	int id = omp_get_thread_num();
@@ -182,17 +179,8 @@ void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, in
 
 
 	
-//	std::cout<<"ntrackdiv is "<<ntrackdiv<<std::endl;
-	// #pragma omp parallel for num_threads(4)
-		// for(i=0;i<ntrackdiv;i++) {
 	for (i=id; i<ntrackdiv; i=i+nthreads) {
-			// if(i!=id) {
-			// 	std::cout<<"Skipped"<<std::endl;
-			// }
-			// else {
 				track subtrack, *usetrack;
-				int id = omp_get_thread_num();
-				int nthreads = omp_get_num_threads();			
 		if (ntrackdiv == 1)
 			{
 			usetrack = &atrack;
@@ -203,37 +191,29 @@ void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, in
 			usetrack = &subtrack;
 			NTRACKDIV_COUNT=NTRACKDIV_COUNT+1;
 			//TESTS from CMW 22/03/2024
-			//Seeing what actually happens when subtracks are generated.
+			//Seeing what actually happens when subtracks are generated. Uncomment for debugging.
 
-			std::cout<<"Now on subtrack "<<i<<"\n";
-			std::cout<<"t0 = "<<usetrack->t0<<"\n";
-			std::cout<<"x0 = "<<usetrack->x0<<"\n";
-			std::cout<<"y0 = "<<usetrack->y0<<"\n";
-			std::cout<<"z0 = "<<usetrack->z0<<"\n";
+			// std::cout<<"Now on subtrack "<<i<<"\n";
+			// std::cout<<"t0 = "<<usetrack->t0<<"\n";
+			// std::cout<<"x0 = "<<usetrack->x0<<"\n";
+			// std::cout<<"y0 = "<<usetrack->y0<<"\n";
+			// std::cout<<"z0 = "<<usetrack->z0<<"\n";
 			
-			switch(id) {
-					case 0:
-						THREAD_LOOP_0++;
+			// switch(id) {
+			// 		case 0:
+			// 			THREAD_LOOP_0++;
 
-					case 1:
-						THREAD_LOOP_1++;
+			// 		case 1:
+			// 			THREAD_LOOP_1++;
 
-					case 2:
-						THREAD_LOOP_2++;
+			// 		case 2:
+			// 			THREAD_LOOP_2++;
 
-					case 3:
-						THREAD_LOOP_3++;
-				} 
-
+			// 		case 3:
+			// 			THREAD_LOOP_3++;
+			// 	} 
 			}
 			
-		// if(i==id){
-		// 	std::cout<<"true"<<std::endl;
-		// }
-		// else {
-		// 	std::cout<<"False"<<std::endl;
-		// }
-        //Preserving the original code as to not cause irreparable damage
 		for (j=0; j<nfacetdiv; j++)
 			{
 			for (k=0; k<nfacetdiv; k++)
@@ -251,23 +231,11 @@ void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, in
 					} */
 				// put Cherenkov calculation as a function of frequencies here
 				//facet temp = subfacets[j*nfacetdiv+k];
-				// #pragma omp barrier
-				// 	std::cout<<"VARIABLE CHECK: \n";
-				// 	std::cout<<"if0 = "<<if0<<std::endl;
-				// 	std::cout<<"nfs = "<<nfs<<std::endl;
-				// 	//std::cout<<"subfacet = "<<temp<<std::endl;
-				// 	std::cout<<"ifx = "<<ifx<<std::endl;
-				// 	std::cout<<"ify = "<<ify<<std::endl;
-				// 	std::cout<<"surface = "<<surface<<std::endl;
-				// #pragma barrier
-				// 	std::cout<<"SUBTRACK CHECK:\n";
-				// 	std::cout<<"x0 is "<<usetrack->x0<<".\n";
 				
 				cherenkov(if0, nfs, subfacets[j*nfacetdiv+k], *usetrack, ifx, ify, surface,0);
-				// #pragma omp critical
-				// 	std::cout<<"Hello from thread "<<id<<" of "<<nthreads<<"! The i variable is currently "<<i<<".\n";	
-				//std::cout<<"i is now "<<i<<".\n";	
-				
+
+				//Uncomment to check if the correct thread is being called:
+				//std::cout<<"Hello from thread "<<id<<" of "<<nthreads<<"!\n";
 			}
 		}
 	}
@@ -666,14 +634,15 @@ void cherenkov(int if0, int nfs, facet &subfacet, track &subtrack, int ifx, int 
 					
 					
 					// Go phases! They start off imaginary, then evolve with time to...
-					//#pragma omp barrier
-					//{
-					
+
+				#pragma omp critical
+				{					
 					EZ[i][j][2*k] += A * sin_phase0 * Cz; // real
 					EXY[i][j][2*k] += A * sin_phase0 * Cxy;
 					EZ[i][j][2*k+1] += A * cos_phase0 * Cz; // imaginary
 					EXY[i][j][2*k+1] += A * cos_phase0 * Cxy;
-	
+				}
+				
 				if (isnan(EZ[i][j][2*k]) || isnan(EZ[i][j][2*k+1]) || isnan(EXY[i][j][2*k]) || isnan(EXY[i][j][2*k+1]))
 					{
 						cout<<"isnan!"<<endl;
