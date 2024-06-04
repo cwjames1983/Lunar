@@ -158,7 +158,8 @@ int domags=0;
 long double FDIV_FACTOR=1000.;
 long long int N_VISIBLE=0, N_INVISIBLE=0;
 
-int NTIMES=5, TIMES[5];
+int NTIMES=5;	
+double TIMES[5];
 
 // ####### FUNCTION DECLARATIONS #######
 

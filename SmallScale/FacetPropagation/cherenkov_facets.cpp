@@ -615,6 +615,7 @@ void cherenkov(int if0, int nfs, facet &subfacet, track &subtrack, int ifx, int 
 					EXY[i][j][2*k] += A * sin_phase0 * Cxy;
 					EZ[i][j][2*k+1] += A * cos_phase0 * Cz; // imaginary
 					EXY[i][j][2*k+1] += A * cos_phase0 * Cxy;
+					
 					if (isnan(EZ[i][j][2*k]) || isnan(EZ[i][j][2*k+1]) || isnan(EXY[i][j][2*k]) || isnan(EXY[i][j][2*k+1]))
 						{
 						cout<<"isnan!"<<endl;
