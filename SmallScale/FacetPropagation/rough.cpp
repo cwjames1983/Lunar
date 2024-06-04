@@ -63,7 +63,7 @@ int main(void) {
 
 
 //Parallelisation declaration
-	omp_set_num_threads(4);
+    omp_set_num_threads(10);
 // ######## program starts ##########	
 	
 	cin>>USE_WHICH>>ERROR_MARGIN>>SIN_APPROX>>MAX_SPLITS>>FMODE>>SIN_APPROX_2>>TDIV_METH>>TDIV_CONST>>FDIV_METH>>FDIV_FACTOR; cin.getline(tempstring,mfl);
@@ -316,6 +316,7 @@ At this point we have some tracks, and a surface. Now we want to specify at what
 	cout<<"Thread 1: "<<THREAD_LOOP_1<<" divisions.\n";
 	cout<<"Thread 2: "<<THREAD_LOOP_2<<" divisions.\n";
 	cout<<"Thread 3: "<<THREAD_LOOP_3<<" divisions.\n";
+    cout<<"Total num of threasd: "<<OMP_NUM_THREADS<<".\n";
 
 // ########## Program has finished - write info ###########
 

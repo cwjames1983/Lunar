@@ -170,17 +170,21 @@ void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, in
 			}
 		}
 //CMW 02-04-2024 making changes for parallelisation here
-#pragma omp parallel//reduction(+:EXY) reduction(+:EZ)
-{
+//#pragma omp parallel//reduction(+:EXY) reduction(+:EZ)
+//{
     //For n threads, every iteration of i that is a multiple of n will execute
     //the code.
-	int id = omp_get_thread_num();
-	int nthreads = omp_get_num_threads();
+	//int id = omp_get_thread_num();
+	//int nthreads = omp_get_num_threads();
 
 
 	
-	for (i=id; i<ntrackdiv; i=i+nthreads) {
+	//for (i=id; i<ntrackdiv; i=i+nthreads) {
+//04-05-2024 trying dynamically assigned threads
+#pragma omp parallel for schedule(guided)
+	for (i=0; i<ntrackdiv; i++) {
 				track subtrack, *usetrack;
+                //OMP_NUM_THREADS = omp_get_thread_num();
 		if (ntrackdiv == 1)
 			{
 			usetrack = &atrack;
@@ -237,8 +241,8 @@ void div_facet_track(track &atrack, facet &afacet, int if0, int nfs, int ifx, in
 				//Uncomment to check if the correct thread is being called:
 				//std::cout<<"Hello from thread "<<id<<" of "<<nthreads<<"!\n";
 			}
-		}
-	}
+		//}
+    }
 	
 }
 //	if (nfacetdiv != 1) {delete [] subfacets; subfacets=0;}

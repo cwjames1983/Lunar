@@ -31,8 +31,8 @@ Oh well, bugger it...
 #include <omp.h>
 
 #include "../../Utilities/long_constants.h"
-//#include "/pawsey/mwa_sles12sp4/devel/cascadelake/gcc/8.3.0/openmpi-ucx-gpu/4.0.3/fftw/3.3.8/include/fftw3.h"
-#include "/usr/local/include/fftw3.h"
+#include "/pawsey/mwa_sles12sp4/devel/cascadelake/gcc/8.3.0/openmpi-ucx-gpu/4.0.3/fftw/3.3.8/include/fftw3.h"
+//#include "/usr/local/include/fftw3.h"
 
 using namespace std;
 struct track
@@ -158,6 +158,7 @@ long THREAD_LOOP_0 = 0;
 long THREAD_LOOP_1 = 0;
 long THREAD_LOOP_2 = 0;
 long THREAD_LOOP_3 = 0;
+int OMP_NUM_THREADS = 0;
 
 
 //switches: for output
