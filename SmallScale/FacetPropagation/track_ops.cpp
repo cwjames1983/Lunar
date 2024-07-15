@@ -150,6 +150,7 @@ void print_tracks(char *filename, track *tracks, int ntracks, int dowhat)
 // the format for x,y,z is just in m. The assumption is that the main cascade
 // started at 0,0 and moves in the z-direction
 // the two times are: start in seconds, end in seconds
+// the units of Q are in units of the elementary charge
 int read_tracks(char *track_file, track *&tracks, int &ntracks)
 	{
 	ifstream in;

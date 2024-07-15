@@ -12,9 +12,9 @@ The Hurst exponent, H, is meaningles, since Srms is zero.
 
 int main()
 	{
-	int nx=1024, ny=1024;
+	int nx=128, ny=128;
 	long double ds=0.2, Srms=0., H=0.78;
-	char *opfile="trivial.dat";
+	char *opfile="trivial_128.dat";
 	ofstream out(opfile);
 	int i,j;
 	

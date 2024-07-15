@@ -1,0 +1,6 @@
+1
+0 -0.5 0 -10 1.0 0.5 0 -10 -1.
+# leading "1" is "number of tracks" (i.e. subsequent lines)
+# notation is: t0 x0 y0 z0 beta x1 y1 z1 Q
+# units are m for distance, seconds for time, and units of
+# (positive) elementary charge for Q (-1. is ~ -1.6e-19 C)
