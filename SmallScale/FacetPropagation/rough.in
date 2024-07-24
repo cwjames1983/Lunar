@@ -1,17 +1,17 @@
-3 0.1 1e-8 1 1 1e-6 0 0 1000 
-1 ../Surfaces/trivial_128.dat
+3 0.1 1e-8 1 1 1e-6 0 0 0
+1 Surfaces/trivial_1024.dat
 1 0 0 0 
 0 modded_trivial.dat
-../TrackFiles/example_track.dat
+TrackFiles/trivial_tracks.dat
 0   0    0.0    0.0    50.0
 1.8 1.8 18e10
-0 0 5  
+0 5 36  
 90 1 90
 2 1e8 1e9 1
 CIRA/statistics.log
 0 arena_10m_1G_f // columns const theta, rows const phi, tables const freq
 1 CIRA/flat_test // columns const freq, rows const theta, tables const phi
-0 arena_100m_t_v2 // theta file
+1 arena_100m_t_v2 // theta file
 0 arena_100m_fft_v2 // time file
 
 
@@ -27,6 +27,7 @@ Line 1:
 	FMODE (=1 to loop facets as inner loop, =2 to loop as outer loop. Use 1 unless a very large surface)
 	SIN_APPROX_2 (=1e-6] (value for approx sin x = x in generating specular vectors)
 	TDIV_METHOD [=0] (method for dividing tracks. If > 0 then force TDIVS = this value.)
+	TDIV_CONST [=0] for the tracks to be 'intelligently' split up to TDIV_METHOD times. [=1] to force the number of track divisions to TDIV_METHOD
 	FDIVMETHOD [=1] (method for dividing facets. If > 0 force FDIV=this value)
 
 Line 2:
