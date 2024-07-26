@@ -129,7 +129,7 @@ def write_files(N,lslims,mags,theta,outname = "trackfile"):
         # writes output file
         outfile = outname + "_" + str(i) + ".dat"
         out = open(outfile, 'w')
-        out.write(str(i)+"\n") # single track
+        out.write("1\n") # single track
         string="{0:1.5e} {1:6.3f} {2:6.3f} {3:6.3f} {4:1.3f} {5:5.3f} {6:5.3f} {7:5.3f} {8:1.5e}\n".format(t0,x0,y0,z0,beta,x1,y1,z1,mag)
         #print(string)
         out.write(string)

@@ -8,6 +8,6 @@ prefix="E${energy}_T${theta}_N${Ndivs}" #just an example naming coefficient for 
 
 
 echo "python make_cascade.py -N $Ndivs -E $energy --theta $theta -O $prefix"
-python make_cascade.py -N $Ndivs -E $energy -T $theta -O $prefix
+python3 make_cascade.py -N $Ndivs -E $energy -T $theta -O $prefix
 
 
