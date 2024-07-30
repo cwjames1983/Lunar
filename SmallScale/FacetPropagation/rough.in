@@ -1,8 +1,8 @@
 3 0.1 1e-8 1 1 1e-6 0 0 0
-1 Surfaces/trivial_1024.dat
+1 Surfaces/trivial_128.dat
 1 0 0 0 
 0 modded_trivial.dat
-TrackFiles/trivial_tracks.dat
+TrackFiles/example_track.dat
 0   0    0.0    0.0    50.0
 1.8 1.8 18e10
 0 5 36  
