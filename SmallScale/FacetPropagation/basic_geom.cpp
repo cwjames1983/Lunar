@@ -69,6 +69,11 @@ void normalise(long double vec[3])
 		norm += vec[i]*vec[i];
 		}
 	norm=pow(norm,0.5l);
+	if( norm == 0 )
+		{
+			cout<<"cannot normalise a zero-vector. You may have a track with null width!"<<endl;
+			exit(0);
+		}
 	for (i=0; i<3; i++)
 		{
 		vec[i]/=norm;
