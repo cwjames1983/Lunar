@@ -261,7 +261,7 @@ At this point we have some tracks, and a surface. Now we want to specify at what
 			// loops through tracks
 			for (i=0; i<ntracks; i++)
 				{
-				cout<<"ntrack"<<ntracks<<endl;
+				
 				// does this for all facets, unless skipped; begins with facets directly above
 				for (j=0; j<NFDIVS; j++)
 					{
