@@ -400,9 +400,9 @@ def check_inputs(a):
         ntracks = a.ntracks
     
     
-#    if not a.theta:
-#        print("Theta not provided, Please use -T [theta]")
-#        err=True
+    if not a.theta:
+        print("Theta not provided, Please use -T [theta]")
+        err=True
     if a.theta > 90:
         print("Theta value ",a.theta," too big: 0 =< theta =< 90")
         err=True
