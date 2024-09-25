@@ -70,6 +70,7 @@ int main()
 // ######## handles the surface #########
 	TIMES[0]=time(0);
 	cin>>surf_file_type>>surf_file; cin.getline(tempstring,mfl);
+	cout<<"surf_file_type = "<<surf_file_type<<" surf_file = "<<surf_file<<"\n";
 	cout<<"Reading in surface from file "<<surf_file<<endl;//"\n";
 	if (surf_file_type == 1)
 		{
@@ -119,7 +120,7 @@ int main()
 		}
 	cout<<"There are "<<ntracks<<" tracks in the track file."<<endl;
 	
-//	print_tracks(0,tracks, ntracks,-1);
+	print_tracks(0,tracks, ntracks,-1);
 	
 	// gets two angles with which to transform the tracks, and an xyz position for cascade starting position relative to the 0,0,0 of the surface. The only fancy thing is the use of 'depth', so the z-coordinate is relative to the surface.
 	cin>>theta>>phi>>dx>>dy>>depth; cin.getline(tempstring,mfl);
@@ -260,6 +261,7 @@ At this point we have some tracks, and a surface. Now we want to specify at what
 			// loops through tracks
 			for (i=0; i<ntracks; i++)
 				{
+				
 				// does this for all facets, unless skipped; begins with facets directly above
 				for (j=0; j<NFDIVS; j++)
 					{

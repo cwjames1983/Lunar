@@ -72,7 +72,7 @@ void transform_tracks(long double theta, long double phi, long double dx, long d
 		xprime=(cosphi*x-sinphi*y);
 		yprime=(sinphi*x+cosphi*y);
 		x=xprime;
-		z=zprime;
+		y=yprime;
 		
 		x += dx+X2;
 		y += dy+Y2;
@@ -102,7 +102,7 @@ void transform_tracks(long double theta, long double phi, long double dx, long d
 		xprime=(cosphi*x-sinphi*y);
 		yprime=(sinphi*x+cosphi*y);
 		x=xprime;
-		z=zprime;
+		y=yprime;
 		
 		x += dx+X2;
 		y += dy+Y2;
@@ -162,10 +162,12 @@ int read_tracks(char *track_file, track *&tracks, int &ntracks)
 		return 0;
 		}
 	in>>ntracks;
+	
 	tracks = new track[ntracks];
 	for (i=0; i<ntracks; i++)
 		{
 		in>>tracks[i].t0>> tracks[i].x0>> tracks[i].y0>> tracks[i].z0>> tracks[i].beta>>tracks[i].x1>> tracks[i].y1>> tracks[i].z1>>tracks[i].q;
+		
 		}
 	return 1;
 	}
