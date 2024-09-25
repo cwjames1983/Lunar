@@ -162,12 +162,12 @@ int read_tracks(char *track_file, track *&tracks, int &ntracks)
 		return 0;
 		}
 	in>>ntracks;
-	cout<<"ntracks = "<<ntracks<<endl;
+	
 	tracks = new track[ntracks];
 	for (i=0; i<ntracks; i++)
 		{
 		in>>tracks[i].t0>> tracks[i].x0>> tracks[i].y0>> tracks[i].z0>> tracks[i].beta>>tracks[i].x1>> tracks[i].y1>> tracks[i].z1>>tracks[i].q;
-		cout<<"track "<<i<<" t0 "<<tracks[i].t0<<"x0"<< tracks[i].x0<<"y0"<< tracks[i].y0<<"z0"<< tracks[i].z0<<"beta"<< tracks[i].beta<<"x1"<<tracks[i].x1<<"y1"<< tracks[i].y1<<"z1"<< tracks[i].z1<<"q"<<tracks[i].q<<endl;
+		
 		}
 	return 1;
 	}
