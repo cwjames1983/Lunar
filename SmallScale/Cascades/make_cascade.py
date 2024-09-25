@@ -66,7 +66,7 @@ def main():
     
         N (int): Number of pieces in which to divide the cascade
     
-        Theta (float, deg): Angle of impact relative to the surface
+        Theta (float, deg): IGNORED Angle of impact relative to the surface
             normal (0 is down). Always impacts in the x-z plane
         
     Secondary arguments:
@@ -113,13 +113,13 @@ def write_files(N,lslims,mags,theta,outname = "trackfile"):
         mag=mags[i] # this is in units of fundamental charge
         #print(l0,l1,mag)
         
-        x0 = l0*ctheta
-        x1 = l1*ctheta
+        x0 = 0.
+        x1 = 0.
         y0=0.
         y1=0.
         
-        z0 = -l0*stheta
-        z1 = -l1*stheta
+        z0 = l0
+        z1 = l1
         
         t0 = l0/clight
         t1 = l1/clight
@@ -128,6 +128,7 @@ def write_files(N,lslims,mags,theta,outname = "trackfile"):
         
         # writes output file
         outfile = outname + "_" + str(i) + ".dat"
+        print("i value = ", i)
         out = open(outfile, 'w')
         out.write("1\n") # single track
         string="{0:1.5e} {1:6.3f} {2:6.3f} {3:6.3f} {4:1.3f} {5:5.3f} {6:5.3f} {7:5.3f} {8:1.5e}\n".format(t0,x0,y0,z0,beta,x1,y1,z1,mag)
@@ -399,10 +400,10 @@ def check_inputs(a):
         ntracks = a.ntracks
     
     
-    if not a.theta:
-        print("Theta not provided, Please use -T [theta]")
-        err=True
-    elif a.theta > 90:
+#    if not a.theta:
+#        print("Theta not provided, Please use -T [theta]")
+#        err=True
+    if a.theta > 90:
         print("Theta value ",a.theta," too big: 0 =< theta =< 90")
         err=True
     elif a.theta < 0.:

@@ -2,7 +2,7 @@
 
 
 energy=1e18
-theta=45
+theta=0
 Ndivs=10
 prefix="E${energy}_T${theta}_N${Ndivs}" #just an example naming coefficient for the cascade
 

@@ -303,7 +303,7 @@ void cherenkov(int if0, int nfs, facet &subfacet, track &subtrack, int ifx, int 
 	// innermost loop variables
 	long double cos_theta_t, sin_theta_t, cos_phi_t, sin_phi_t, sin_beta, cos_beta; // sin and cos of angle wrst transmission basis vectors
 	long double phi_hat[3], theta_hat[3]; // basis vectors for electric field calculations
-	long double A; // decoherence factor during A. = effective height x interference
+	long double A, B; // decoherence factor during A. = effective height x interference
 	long double phase0, sin_phase0, cos_phase0;
 	long double Cxy, Cz, Cptz, Cptxy, Cppz, Cppxy, Cstz, Cstxy, Cspz, Cspxy; // coefs tracing from poke/slap, to theta_phi, to z/xy
 	long double proj_pz, proj_pxy, proj_tz, proj_txy; // projections of theta-phi basis to z-xy basis
@@ -571,7 +571,7 @@ void cherenkov(int if0, int nfs, facet &subfacet, track &subtrack, int ifx, int 
 							A = sin(ktixf*subfacet.dx) * sin(ktiyf*subfacet.dy) / (ktixf*ktiyf);
 							}
 						}
-					
+					B = A;
 					sin_phase0=sin(phase0);
 					cos_phase0=cos(phase0);
 					
@@ -583,9 +583,11 @@ void cherenkov(int if0, int nfs, facet &subfacet, track &subtrack, int ifx, int 
 					EXY[i][j][2*k] += A * sin_phase0 * Cxy;
 					EZ[i][j][2*k+1] += A * cos_phase0 * Cz; // imaginary
 					EXY[i][j][2*k+1] += A * cos_phase0 * Cxy;
+					
 					if (isnan(EZ[i][j][2*k]) || isnan(EZ[i][j][2*k+1]) || isnan(EXY[i][j][2*k]) || isnan(EXY[i][j][2*k+1]))
 						{
 						cout<<"isnan!"<<endl;
+						exit(0);
 						}
 					}
 				}

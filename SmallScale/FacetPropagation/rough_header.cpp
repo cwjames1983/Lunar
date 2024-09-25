@@ -31,7 +31,7 @@ using namespace std;
 
 #include "../../Utilities/long_constants.cpp"
 
-#include "/usr/local/include/fftw3.h"
+#include "/home/lisaholland/Documents/fftw-3.3.10/include/fftw3.h"
 
 struct track
 	{
